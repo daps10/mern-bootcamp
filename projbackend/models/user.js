@@ -40,10 +40,12 @@ const userSchema = new Schema({
         type: Array,
         default: []
     }
+}, {
+    timestamps: true
 });
 
 // create virtuals
-userSchema.virtaul("password")
+userSchema.virtual("password")
     .set(function(password) {
         this._password = password
         this.salt = uuidv4()
