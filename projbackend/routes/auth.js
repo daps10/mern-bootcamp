@@ -1,19 +1,19 @@
 const express = require('express')
 const router = express.Router()
 
+const {
+    signup,
+    signin,
+    signout
+} = require("../controllers/authController");
+
 // signout
-router.post('/signup', (req, res) => {
-    res.send('User Signup')
-})
+router.post('/signup', signup)
 
 // signin
-router.post('/signin', (req, res) => {
-    res.send('User Signup')
-})
+router.post('/signin', signin)
 
 // signout
-router.get('/signout', (req, res) => {
-    res.send('User signout')
-})
+router.get('/signout', signout)
 
 module.exports = router;
