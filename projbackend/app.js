@@ -1,5 +1,8 @@
 const express = require('express')
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +22,11 @@ mongoose.connect( URL , {
 .catch(() => {
   console.log("DB not connected");
 });
+
+// third party middlewares
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
 
 // Initial route
 app.get('/', (req, res) => {
