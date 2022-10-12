@@ -1,24 +1,23 @@
 const express = require('express')
 const router = express.Router()
 
+const {
+    getAllOrders,
+    getOrder,
+    createOrder,
+    updateOrder
+} = require("../controllers/orderController")
+
 // Get all orders
-router.get('/:userId', (req, res) => {
-    res.send('Get all orders')
-})
+router.get('/:userId', getAllOrders)
 
 // Get order
-router.get('/:orderId', (req, res) => {
-    res.send('Retrieve order')
-})
+router.get('/:orderId', getOrder)
 
 // Create order
-router.post('/create', (req, res) => {
-    res.send('Create order')
-})
+router.post('/create', createOrder)
 
 // Update order
-router.put('/update/:status/:orderId', (req, res) => {
-    res.send('update order')
-})
+router.put('/update/:status/:orderId', updateOrder)
 
 module.exports = router;

@@ -1,34 +1,31 @@
 const express = require('express')
 const router = express.Router()
 
+const{
+    uploadedPhoto,
+    getCategories,
+    createProduct,
+    getProduct,
+    updateProduct,
+    deleteProduct
+} = require("../controllers/productController");
+
 // upload photo
-router.post('/photo/:productId', (req, res) => {
-    res.send('Upload photo')
-})
+router.post('/photo/:productId', uploadedPhoto)
 
 // Get all categories
-router.get('/categories', (req, res) => {
-    res.send('get all categories')
-})
+router.get('/categories', getCategories)
 
 // create product
-router.post('/create', (req, res) => {
-    res.send('Product create')
-})
+router.post('/create', createProduct)
 
 // Get product
-router.get('/:productId', (req, res) => {
-    res.send('Retrieve product')
-})
+router.get('/:productId', getProduct)
 
 // Delete product
-router.delete('/:productId', (req, res) => {
-    res.send('Delete product')
-})
+router.delete('/:productId', deleteProduct)
 
 // Update product
-router.put('/update/:productId', (req, res) => {
-    res.send('update product')
-})
+router.put('/update/:productId', updateProduct)
 
 module.exports = router;
