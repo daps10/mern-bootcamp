@@ -1,11 +1,12 @@
 const express = require('express')
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
-const port = 3000
+const port = process.env.PORT || 8000;
 
 // connect mongoose
-const URL = "mongodb+srv://daps:ZZoT4SPbypaXc5fd@cluster0.nrn2f.mongodb.net/mern-bootcamp";
+const URL = process.env.MONGODB_URL;
 
 mongoose.connect( URL , { 
     useCreateIndex: true,
@@ -13,7 +14,10 @@ mongoose.connect( URL , {
     useNewUrlParser: true
 })
 .then(() => {
-    console.log("DB CONNECTED");
+  console.log("DB CONNECTED");
+})
+.catch(() => {
+  console.log("DB not connected");
 });
 
 // Initial route
