@@ -11,7 +11,7 @@ const {
 router.get('/read', readUser)
 
 // update user
-router.put('/update/:userId', updateUser)
+router.put('/update', updateUser)
 
 // list user
 router.get('/', listAllUser)
