@@ -61,6 +61,9 @@ userSchema.virtual("password")
 userSchema.methods = {
     // authenticate
     authenticate: function (plainpassword) {
+        // console.log("coming here ====== ", plainpassword)
+        // console.log("Secure password ====== ", this.securePassword(plainpassword))
+        // console.log("Database password ====== ", this.encry_password)
         return this.securePassword(plainpassword) === this.encry_password;
     },
     // secure password
