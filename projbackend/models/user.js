@@ -56,14 +56,14 @@ userSchema.virtual("password")
     });
 
 // creating methods
-userSchema.method = {
+userSchema.methods = {
     // authenticate
     authenticate: function (plainpassword) {
         return this.securePassword(plainpassword) === this.encry_password;
     },
     // secure password
     securePassword: function(plainpassword) {
-        if(!password) return "";
+        if(!plainpassword) return "";
         try {
             return createHmac('sha256', this.salt)
                     .update(plainpassword)
