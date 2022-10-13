@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
+const { checkAuthorization } = require("../middlewares/auth/authorization");
 
 const {
     signup,
@@ -55,6 +56,10 @@ router.post(
 )
 
 // signout
-router.get('/signout', signout)
+router.get(
+    '/signout',
+    checkAuthorization, 
+    signout
+)
 
 module.exports = router;
