@@ -13,21 +13,25 @@ router.post(
     '/signup',
     [
         check('name', "Name field is required")
+            .not().isEmpty()
+            .withMessage('Name should not be empty')    
             .isLength({ min: 3 })
-            .withMessage('Name should be at least 3 chars long')
-            .isLength({ min: 32 })
-            .withMessage('Name should be at least 32 chars long'),
-        check('lastName', "Last name field must be required!")
+            .withMessage('Name should be at least 3 chars long'),
+        check('lastname')
+            .not().isEmpty()
+            .withMessage('Last name should not be empty')    
             .isLength({ min: 3 })
-            .withMessage('Last name should be at least 3 chars long')
-            .isLength({ min: 32 })
-            .withMessage('Last name should be at least 32 chars long'),
-        check('email', "Email should be atleast 5 characters").isEmail(),
-        check('password', "Password field must be required!")
+            .withMessage('Last name should be at least 3 chars long'),
+        check('email')
+            .not().isEmpty()
+            .withMessage('Email should not be empty')    
+            .isEmail()
+            .withMessage('Email does not in valid format'),
+        check('password')
+            .not().isEmpty()
+            .withMessage('Password should not be empty')
             .isLength({ min: 3 })
-            .withMessage('Name should be at least 3 chars long')
-            .isLength({ min: 16 })
-            .withMessage('Password should be at least 16 chars long'),
+            .withMessage('Password should be at least 3 chars long'),
     ], 
     signup
 )

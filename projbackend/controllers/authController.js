@@ -1,11 +1,21 @@
 const User = require("../models/user");
+const { validationResult } = require('express-validator');
 
 exports.signup = async (req, res) => {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ 
+            errors: errors.array()[0].msg 
+        });
+    }
+
     const user = new User(req.body);
 
     // Save user in the database
     user.save((err, user) => {
         if(err) {
+            console.log(err)
             return res.status(400).json({
                 err: "NOT able to save user in DB"
             });
