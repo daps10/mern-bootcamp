@@ -37,7 +37,22 @@ router.post(
 )
 
 // signin
-router.post('/signin', signin)
+router.post(
+    '/signin', 
+    [
+        check('email')
+            .not().isEmpty()
+            .withMessage('Email should not be empty')    
+            .isEmail()
+            .withMessage('Email does not in valid format'),
+        check('password')
+            .not().isEmpty()
+            .withMessage('Password should not be empty')
+            .isLength({ min: 1 })
+            .withMessage('Password should be at least 1 chars long'),
+    ], 
+    signin
+)
 
 // signout
 router.get('/signout', signout)
