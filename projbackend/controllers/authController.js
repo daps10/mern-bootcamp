@@ -18,6 +18,18 @@ exports.signup = async (req, res) => {
         let user = new User(req.body);
         const userRes = await user.save();
 
+        // Create token 
+        const authToken = jwt.sign({
+            _id: userRes._id
+        }, process.env.SECRET)
+        
+        // put token in cookie
+        res.cookie(
+            "authToken", 
+            authToken,
+            { expiry: new Date() + 9999 }
+        )
+
         // Send user from the response
         res.status(200).json({ 
             msg: 'User has been signed up successfully!', 
@@ -28,7 +40,8 @@ exports.signup = async (req, res) => {
                 email: userRes.email,
                 role: userRes.role,
                 userinfo: userRes.userinfo,
-                createdAt: userRes.createdAt
+                createdAt: userRes.createdAt,
+                authToken
             }
         });
     } catch (error) {
@@ -104,5 +117,16 @@ exports.signin = async (req, res) => {
 };
 
 exports.signout = async (req, res) => {
-    res.status(200).json({ msg: 'Signout successfully' });
+    res.clearCookie("authToken");
+    res.status(200).json({
+        msg : "Signout success"
+    })
+    // const bearerHeader = req.headers.authorization;
+    // if(typeof bearerHeader !== "undefined") {
+    //     res.status(200).json({ msg: 'Signout successfully' });
+    // } else {
+    //     res.status(403).json({
+    //         msg : "No token provided!"
+    //     })
+    // }
 };
