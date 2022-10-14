@@ -7,6 +7,7 @@ const categoryValidation = require('../validations/category.validation');
 const isCategoryNameTaken = require('../middlewares/category/isCategoryNameTaken');
 const isUpdateCategoryNameTaken = require('../middlewares/category/isUpdateCategoryNameTaken');
 const checkCategoryExist = require('../middlewares/category/checkCategoryExist');
+const isAdmin = require('../middlewares/auth/isAdmin');
 
 // controllers
 const {
@@ -38,6 +39,7 @@ router.post(
     categoryValidation.addCategory,
     validate,
     checkAuthorization,
+    isAdmin,
     isCategoryNameTaken,
     createCategory
 );
@@ -46,6 +48,7 @@ router.post(
 router.delete(
     '/:id', 
     checkAuthorization,
+    isAdmin,
     checkCategoryExist,
     deleteCategory
 )
@@ -56,6 +59,7 @@ router.put(
     categoryValidation.updateCategory,
     validate, 
     checkAuthorization,
+    isAdmin,
     isUpdateCategoryNameTaken,
     updateCategory
 );
