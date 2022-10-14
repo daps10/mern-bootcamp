@@ -88,3 +88,31 @@ exports.updateUser = async (req, res) => {
         });
     }
 };
+
+exports.getPurchaseList = async (req, res) => {
+    try {
+        const userId = req.currUser._id;
+        const orderList = await userService.findAllOrders({
+            id : userId
+        });
+        return false;
+        if(userData.length > 0) {
+            return res.status(httpStatus.OK).json({
+                status: httpStatus.OK,
+                message: "User list has been found successfully!",
+                response: userData 
+            });
+        } else {
+            return res.status(httpStatus.NOT_FOUND).json({
+                status: httpStatus.NOT_FOUND,
+                message: "User list has been not found!"
+            });
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Something went wrong!"
+        });     
+    }
+};

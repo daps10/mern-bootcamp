@@ -11,7 +11,8 @@ const userValidation = require('../validations/user.validation');
 const { 
     getUserById,
     updateUser,
-    listAllUser
+    listAllUser,
+    getPurchaseList
 } = require("../controllers/user.controller")
 
 // list user
@@ -20,7 +21,6 @@ router.get(
     checkAuthorization,
     listAllUser
 );
-
 
 // getUser
 router.get(
@@ -37,6 +37,13 @@ router.put(
     checkAuthorization,
     isEmailUpdateTaken,
     updateUser
+);
+
+// Get user's purchase list
+router.get(
+    '/orders/:userId', 
+    checkAuthorization,
+    getPurchaseList
 );
 
 module.exports = router;
