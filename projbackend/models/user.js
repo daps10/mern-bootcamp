@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
     purchases: {
         type: Array,
         default: []
+    },
+    accessToken: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true
@@ -59,6 +63,17 @@ userSchema.virtual("password")
 
 // creating methods
 userSchema.methods = {
+    transform: function() {
+        const transformed = {};
+        const fields = ['_id', 'name','lastname', 'email', 'userinfo', 'role', 'purchases', 'accessToken', 'createdAt'];
+
+        fields.forEach((field) => {
+        transformed[field] = this[field];
+        });
+
+        return transformed;
+    },
+
     // authenticate
     authenticate: function (plainpassword) {
         // console.log("coming here ====== ", plainpassword)
