@@ -25,10 +25,13 @@ const findById = async (id) => {
 };
 
 const updateUser = async (updateBody, id) => {
-    const user = await User.findById(id);
-    Object.assign(user, updateBody);
-    await user.save();
-    return user;
+    const user = await User.findByIdAndUpdate(
+        { _id: id },
+        { $set: updateBody },
+        { new:true, useFindAndModify:false }
+    );
+
+    return (!user) ? user : await user.transform();
 };
 
 module.exports = {

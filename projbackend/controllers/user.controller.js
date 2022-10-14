@@ -59,7 +59,32 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Update user successfully' 
-    });
+    try {
+        const userId = req.currUser._id;
+        
+        // Update an user
+        const userResponse = await userService.updateUser(
+            req.body,
+            userId
+        );
+            
+        if(!userResponse) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                status: httpStatus.BAD_REQUEST,
+                message: "You are not allowed to update"
+            });
+        }
+
+        res.status(httpStatus.OK).json({
+            status: httpStatus.OK,
+            message: "User has been updated successfully!",
+            response: userResponse
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Something went wrong!"
+        });
+    }
 };

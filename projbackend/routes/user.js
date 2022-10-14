@@ -1,5 +1,6 @@
 const express = require('express')
 const { checkAuthorization } = require("../middlewares/auth/authorization");
+const isEmailUpdateTaken = require("../middlewares/auth/isEmailUpdateTaken");
 const router = express.Router()
 
 // validations
@@ -33,6 +34,8 @@ router.put(
     '/update', 
     userValidation.updateUser,
     validate,
+    checkAuthorization,
+    isEmailUpdateTaken,
     updateUser
 );
 

@@ -15,12 +15,7 @@ const updateUser = [
         .not().isEmpty()
         .withMessage('Email should not be empty')    
         .isEmail()
-        .withMessage('Email does not in valid format'),
-    check('password')
-        .not().isEmpty()
-        .withMessage('Password should not be empty')
-        .isLength({ min: 3 })
-        .withMessage('Password should be at least 3 chars long'),
+        .withMessage('Email does not in valid format')
 ];
 
 module.exports = {
