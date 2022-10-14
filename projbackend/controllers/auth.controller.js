@@ -1,5 +1,3 @@
-const User = require("../models/user.model");
-const { validationResult } = require('express-validator');
 const httpStatus = require('http-status');
 
 // load services
@@ -44,15 +42,6 @@ exports.signup =  async (req, res) => {
 exports.signin = async (req, res) => {
     const { email, password } = req.body
     try {
-        // Finds the validation errors in this request and wraps them in an object with handy functions
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(httpStatus.BAD_REQUEST).json({
-                status: httpStatus.BAD_REQUEST, 
-                errors: errors.array()[0].msg 
-            });
-        }
-        
         const userDetails = await authService.findOne({
             email
         });
