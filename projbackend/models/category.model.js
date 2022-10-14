@@ -13,4 +13,26 @@ const categorySchema = new Schema({
     timestamps: true
 });
 
+// check name is taken or not
+categorySchema.statics.isNameTaken = async function (name, excludeUserId) {
+    const category = await this.findOne({ name, _id: { $ne: excludeUserId } });
+    return !!category;
+};
+
+// creating methods
+categorySchema.methods = {
+    transform: function() {
+        const transformed = {};
+        const fields = ['_id', 'name', 'createdAt'];
+
+        fields.forEach((field) => {
+            transformed[field] = this[field];
+        });
+
+        return transformed;
+    }
+}
+
+
+
 module.exports = mongoose.model("Category", categorySchema);
