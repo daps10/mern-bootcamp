@@ -1,8 +1,11 @@
 const User = require("../models/user.model");
 const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
-const _ = require("lodash");  
+
+// load services
+const {
+    authService
+} = require("../services");
 
 exports.signup = async (req, res) => {
     try {
@@ -16,26 +19,25 @@ exports.signup = async (req, res) => {
         }
         
         // Save user in the database
-        const user = await new User(req.body).save();
-        const userTransformed = await user.transform();
+        const userRes = await authService.createUser(req.body);
         
         // Create token 
-        const accessToken = await generateAccessToken(userTransformed._id);
+        const accessToken = await authService.generateAccessToken(userRes._id);
         
         // Update in DB
-        await updateUser(
+        await authService.updateUser(
             {
                 accessToken: accessToken
             },
-            userTransformed._id
-        )
+            userRes._id
+        );
 
         // Send user from the response
-        res.status(httpStatus.OK).json({ 
-            status: httpStatus.OK,
+        res.status(httpStatus.CREATED).json({ 
+            status: httpStatus.CREATED,
             message: 'User has been signed up successfully!', 
             result : {
-                ...userTransformed,
+                ...userRes,
                 accessToken
             }
         });
@@ -60,11 +62,12 @@ exports.signin = async (req, res) => {
             });
         }
         
-        const userDetails = await User.findOne({ email });
-        const userTransformed = await userDetails.transform();
+        const userDetails = await authService.findOne({
+            email
+        });
         
         // check user exist or not
-        if(!userTransformed) {
+        if(!userDetails) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
                 error: "User doesn't exist!"
@@ -72,7 +75,7 @@ exports.signin = async (req, res) => {
         }
 
         // check password matched or not
-        if(!userDetails.authenticate(password)) {
+        if(!await authService.checkPasswordMatched(userDetails._id,password)) {
             return res.status(httpStatus.UNAUTHORIZED).json({
                 status: httpStatus.UNAUTHORIZED,
                 error: "Email and password do not match!"
@@ -80,23 +83,23 @@ exports.signin = async (req, res) => {
         }
 
         // Create token 
-        const accessToken = await generateAccessToken(userTransformed._id);
-        
+        const accessToken = await authService.generateAccessToken(userDetails._id);
+
         // Update in DB
-        await updateUser(
+        await authService.updateUser(
             {
                 accessToken: accessToken
             },
-            userTransformed._id
+            userDetails._id
         )
-        console.log("Status code", httpStatus.OK)
+        
         // Send response to frontend
         // Send user from the response
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message: 'User has been signed up successfully!', 
             result : {
-                ...userTransformed,
+                ...userDetails,
                 accessToken
             }
         });
@@ -104,14 +107,14 @@ exports.signin = async (req, res) => {
         console.log(error)
         return res.status(httpStatus.BAD_REQUEST).json({
             status: httpStatus.BAD_REQUEST,
-            error: "NOT able to save user in DB"
+            error: "Something went wrong!"
         });
     }
 };
 
 exports.signout = async (req, res) => {
     // Update in DB
-    await updateUser({
+    await authService.updateUser({
         accessToken: null
     }, req.currUser._id)
     res.status(httpStatus.OK).json({
@@ -119,18 +122,3 @@ exports.signout = async (req, res) => {
         message: "Signout success"
     })
 };
-
-const updateUser = async(updateBody, id) => {
-    const user = await User.findById(id);
-    Object.assign(user, updateBody);
-    await user.save();
-    return user;
-}
-
-const generateAccessToken = async(id) => {
-    return jwt.sign({
-        _id: id
-    }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: process.env.ACCESS_TOKEN_LIFE
-    })
-}

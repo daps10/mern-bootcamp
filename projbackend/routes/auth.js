@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
 const { checkAuthorization } = require("../middlewares/auth/authorization");
+const isEmailTaken = require("../middlewares/auth/isEmailTaken");
 
 const {
     signup,
@@ -34,6 +35,7 @@ router.post(
             .isLength({ min: 3 })
             .withMessage('Password should be at least 3 chars long'),
     ], 
+    isEmailTaken,
     signup
 )
 
