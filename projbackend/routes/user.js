@@ -13,6 +13,14 @@ const {
     listAllUser
 } = require("../controllers/user.controller")
 
+// list user
+router.get(
+    '/',
+    checkAuthorization,
+    listAllUser
+);
+
+
 // getUser
 router.get(
     '/:id', 
@@ -26,12 +34,6 @@ router.put(
     userValidation.updateUser,
     validate,
     updateUser
-);
-
-// list user
-router.get(
-    '/', 
-    listAllUser
 );
 
 module.exports = router;

@@ -25,7 +25,7 @@ exports.signup =  async (req, res) => {
         res.status(httpStatus.CREATED).json({ 
             status: httpStatus.CREATED,
             message: 'User has been signed up successfully!', 
-            result : {
+            response : {
                 ...userRes,
                 accessToken
             }
@@ -34,7 +34,7 @@ exports.signup =  async (req, res) => {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            err: "NOT able to save user in DB"
+            message: "NOT able to save user in DB"
         });
     }
 };
@@ -50,7 +50,7 @@ exports.signin = async (req, res) => {
         if(!userDetails) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                error: "User doesn't exist!"
+                message: "User doesn't exist!"
             });
         }
 
@@ -58,7 +58,7 @@ exports.signin = async (req, res) => {
         if(!await authService.checkPasswordMatched(userDetails._id,password)) {
             return res.status(httpStatus.UNAUTHORIZED).json({
                 status: httpStatus.UNAUTHORIZED,
-                error: "Email and password do not match!"
+                message: "Email and password do not match!"
             });
         }
 
@@ -78,7 +78,7 @@ exports.signin = async (req, res) => {
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message: 'User has been signed up successfully!', 
-            result : {
+            response : {
                 ...userDetails,
                 accessToken
             }
@@ -87,7 +87,7 @@ exports.signin = async (req, res) => {
         console.log(error)
         return res.status(httpStatus.BAD_REQUEST).json({
             status: httpStatus.BAD_REQUEST,
-            error: "Something went wrong!"
+            message: "Something went wrong!"
         });
     }
 };

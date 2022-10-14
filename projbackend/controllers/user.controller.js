@@ -5,6 +5,33 @@ const {
     userService
 } = require("../services");
 
+exports.listAllUser = async (req, res) => {
+    try {
+        const userData = await userService.findAllUsers({
+            id : req.currUser._id
+        });
+        
+        if(userData.length > 0) {
+            return res.status(httpStatus.OK).json({
+                status: httpStatus.OK,
+                message: "User list has been found successfully!",
+                response: userData 
+            });
+        } else {
+            return res.status(httpStatus.NOT_FOUND).json({
+                status: httpStatus.NOT_FOUND,
+                message: "User list has been not found!"
+            });
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Something went wrong!"
+        });     
+    }
+};
+
 exports.getUserById = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -26,7 +53,7 @@ exports.getUserById = async (req, res) => {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            error: "Something went wrong!"
+            message: "Something went wrong!"
         });
     }
 };
@@ -34,11 +61,5 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
     res.status(200).json({ 
         msg: 'Update user successfully' 
-    });
-};
-
-exports.listAllUser = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'List all users successfully' 
     });
 };
