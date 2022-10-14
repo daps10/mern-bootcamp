@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
     purchases: {
         type: Array,
         default: []
+    },
+    accessToken: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true
@@ -57,13 +61,27 @@ userSchema.virtual("password")
         return this._password
     });
 
+// check email is taken or not
+userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
+    const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+    return !!user;
+};
+
 // creating methods
 userSchema.methods = {
+    transform: function() {
+        const transformed = {};
+        const fields = ['_id', 'name','lastname', 'email', 'userinfo', 'role', 'purchases', 'accessToken', 'createdAt'];
+
+        fields.forEach((field) => {
+        transformed[field] = this[field];
+        });
+
+        return transformed;
+    },
+
     // authenticate
     authenticate: function (plainpassword) {
-        // console.log("coming here ====== ", plainpassword)
-        // console.log("Secure password ====== ", this.securePassword(plainpassword))
-        // console.log("Database password ====== ", this.encry_password)
         return this.securePassword(plainpassword) === this.encry_password;
     },
     // secure password

@@ -5,7 +5,7 @@ const {
     readUser,
     updateUser,
     listAllUser
-} = require("../controllers/userController")
+} = require("../controllers/user.controller")
 
 // getUser
 router.get('/read', readUser)

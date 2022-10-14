@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
+const { checkAuthorization } = require("../middlewares/auth/authorization");
+const isEmailTaken = require("../middlewares/auth/isEmailTaken");
 
 const {
     signup,
     signin,
     signout
-} = require("../controllers/authController");
+} = require("../controllers/auth.controller");
 
 // signout
 router.post(
@@ -33,6 +35,7 @@ router.post(
             .isLength({ min: 3 })
             .withMessage('Password should be at least 3 chars long'),
     ], 
+    isEmailTaken,
     signup
 )
 
@@ -55,6 +58,10 @@ router.post(
 )
 
 // signout
-router.get('/signout', signout)
+router.get(
+    '/signout',
+    checkAuthorization, 
+    signout
+)
 
 module.exports = router;
