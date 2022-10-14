@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
-const user = require('../../models/user');
+const user = require('../../models/user.model');
 
 
 exports.checkAuthorization = async(req, res, next) => {

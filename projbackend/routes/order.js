@@ -6,7 +6,7 @@ const {
     getOrder,
     createOrder,
     updateOrder
-} = require("../controllers/orderController")
+} = require("../controllers/order.controller")
 
 // Get all orders
 router.get('/:userId', getAllOrders)

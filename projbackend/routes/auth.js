@@ -7,7 +7,7 @@ const {
     signup,
     signin,
     signout
-} = require("../controllers/authController");
+} = require("../controllers/auth.controller");
 
 // signout
 router.post(

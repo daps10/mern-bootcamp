@@ -8,7 +8,7 @@ const{
     getProduct,
     updateProduct,
     deleteProduct
-} = require("../controllers/productController");
+} = require("../controllers/product.controller");
 
 // upload photo
 router.post('/photo/:productId', uploadedPhoto)
