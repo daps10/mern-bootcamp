@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 /* Language File Load */
 const {default: localizify} = require('localizify');
+const helmet = require('helmet');
 
 require("dotenv").config();
 
@@ -41,7 +42,13 @@ mongoose.connect( URL , {
 // third party middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+// set security HTTP headers
+app.use(helmet());
+
+// enable cors
 app.use(cors());
+app.options('*', cors());
 
 // Initial route
 app.get('/', (req, res) => {
