@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
 const user = require('../../models/user.model');
-
-
+const _ = require('lodash');
 exports.checkAuthorization = async(req, res, next) => {
     let token = req.headers["authorization"];
     try {
@@ -13,8 +12,7 @@ exports.checkAuthorization = async(req, res, next) => {
             });
         }
 
-        const bearerToken = token.split(" ")[1];
-        
+        const bearerToken = _.split(token, ' ')[1];
         // verify jwt
         jwt.verify(
             bearerToken, 
@@ -29,7 +27,7 @@ exports.checkAuthorization = async(req, res, next) => {
 
             const userId = decoded._id;
             const userData = await user.findById(userId);
-            if (!userData || userData.accessToken == null) {
+            if (!userData || _.isNull(userData.accessToken)) {
                 return res.status(404).send({
                     status: httpStatus.NOT_FOUND,
                     message: "User details not found"
