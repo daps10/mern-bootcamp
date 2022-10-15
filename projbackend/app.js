@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+/* Language File Load */
+const {default: localizify} = require('localizify');
+
 require("dotenv").config();
 
 // Get routes 
@@ -13,7 +16,12 @@ const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
 
 const app = express();
-const port = process.env.PORT || 8000;
+
+/* set localization */
+const en = require('./locales/en.json');
+localizify
+  .add('en', en)
+  .setLocale("en");
 
 // connect mongoose
 const URL = process.env.MONGODB_URL;
@@ -37,6 +45,8 @@ app.use(cors());
 
 // Initial route
 app.get('/', (req, res) => {
+  console.log(res.__('daps'))
+  console.log(res.__('chavhan'))
   res.send('Hello World!')
 })
 
@@ -48,6 +58,7 @@ app.use("/api/category", categoryRoute)
 app.use("/api/order", orderRoute)
 
 // Listned on the port 
-app.listen(port, () => {
-  console.log(`APP is running at ${port}`)
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`APP is running at ${PORT}`)
 })

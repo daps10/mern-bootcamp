@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const {t} = require('localizify');
 
 // load services
 const {
@@ -24,7 +25,7 @@ exports.signup =  async (req, res) => {
         // Send user from the response
         res.status(httpStatus.CREATED).json({ 
             status: httpStatus.CREATED,
-            message: 'User has been signed up successfully!', 
+            message: t('text_user_signup_success'), 
             response : {
                 ...userRes,
                 accessToken
@@ -34,7 +35,7 @@ exports.signup =  async (req, res) => {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "NOT able to save user in DB"
+            message: t("text_not_able_to_save_user")
         });
     }
 };
@@ -50,7 +51,7 @@ exports.signin = async (req, res) => {
         if(!userDetails) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                message: "User doesn't exist!"
+                message: t("text_user_not_found")
             });
         }
 
@@ -58,7 +59,7 @@ exports.signin = async (req, res) => {
         if(!await authService.checkPasswordMatched(userDetails._id,password)) {
             return res.status(httpStatus.UNAUTHORIZED).json({
                 status: httpStatus.UNAUTHORIZED,
-                message: "Email and password do not match!"
+                message: t("text_user_login_fail")
             });
         }
 
@@ -77,7 +78,7 @@ exports.signin = async (req, res) => {
         // Send user from the response
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: 'User has been signed up successfully!', 
+            message: t('text_user_login_success'), 
             response : {
                 ...userDetails,
                 accessToken
@@ -87,7 +88,7 @@ exports.signin = async (req, res) => {
         console.log(error)
         return res.status(httpStatus.BAD_REQUEST).json({
             status: httpStatus.BAD_REQUEST,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });
     }
 };
@@ -99,6 +100,6 @@ exports.signout = async (req, res) => {
     }, req.currUser._id)
     res.status(httpStatus.OK).json({
         status: httpStatus.OK,
-        message: "Signout success"
+        message: t("text_user_logout")
     })
 };

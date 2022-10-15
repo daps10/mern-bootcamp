@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const {t} = require('localizify');
 
 // load services
 const {
@@ -14,20 +15,20 @@ exports.listAllUser = async (req, res) => {
         if(userData.length > 0) {
             return res.status(httpStatus.OK).json({
                 status: httpStatus.OK,
-                message: "User list has been found successfully!",
+                message: t("text_user_list_found"),
                 response: userData 
             });
         } else {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,
-                message: "User list has been not found!"
+                message:  t("text_user_list_not_found")
             });
         }
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });     
     }
 };
@@ -40,20 +41,20 @@ exports.getUserById = async (req, res) => {
         if(!userRes || userRes === null) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,
-                message: "No user was found in DB."
+                message: t("text_user_not_found")
             });
         }
 
         res.status(200).json({ 
             status: httpStatus.OK,
-            message: 'User details has been found successfully!',
+            message: t("text_user_detail_found"),
             response: userRes 
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });
     }
 };
@@ -71,20 +72,20 @@ exports.updateUser = async (req, res) => {
         if(!userResponse) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                message: "You are not allowed to update"
+                message: t("text_not_allowed_to_update")
             });
         }
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: "User has been updated successfully!",
+            message: t("text_user_updated"),
             response: userResponse
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });
     }
 };
@@ -112,7 +113,7 @@ exports.getPurchaseList = async (req, res) => {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });     
     }
 };
