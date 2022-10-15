@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-require("dotenv").config();
+const xss = require('xss-clean');
+
+/* Language File Load */
+const {default: localizify} = require('localizify');
+const helmet = require('helmet');
 
 // Get routes 
 const authRoute = require("./routes/auth");
@@ -12,19 +16,32 @@ const categoryRoute = require("./routes/category");
 const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
 
+// config 
+const config = require('./config/config');
+
+// loggers
+const logger = require('./config/logger');
+const morgan = require('./config/morgan');
+
 const app = express();
-const port = process.env.PORT || 8000;
+
+if (config.env !== 'test') {
+  app.use(morgan.successHandler);
+  app.use(morgan.errorHandler);
+}
+
+/* set localization */
+const en = require('./locales/en.json');
+localizify
+  .add('en', en)
+  .setLocale("en");
 
 // connect mongoose
-const URL = process.env.MONGODB_URL;
+const URL = config.mongoose.url;
 
-mongoose.connect( URL , { 
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-})
+mongoose.connect( URL , config.mongoose.options)
 .then(() => {
-  console.log("DB CONNECTED");
+    logger.info('Connected to MongoDB');
 })
 .catch(() => {
   console.log("DB not connected");
@@ -33,7 +50,16 @@ mongoose.connect( URL , {
 // third party middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+// set security HTTP headers
+app.use(helmet());
+
+// sanitize request data
+app.use(xss());
+
+// enable cors
 app.use(cors());
+app.options('*', cors());
 
 // Initial route
 app.get('/', (req, res) => {
@@ -48,6 +74,33 @@ app.use("/api/category", categoryRoute)
 app.use("/api/order", orderRoute)
 
 // Listned on the port 
-app.listen(port, () => {
-  console.log(`APP is running at ${port}`)
+app.listen(config.port, () => {
+  logger.info(`Listening to port : ${config.port || 8000}`);
 })
+
+
+const exitHandler = () => {
+  if (server) {
+    server.close(() => {
+      logger.info('Server closed');
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
+  }
+};
+
+const unexpectedErrorHandler = (error) => {
+  logger.error(error);
+  exitHandler();
+};
+
+process.on('uncaughtException', unexpectedErrorHandler);
+process.on('unhandledRejection', unexpectedErrorHandler);
+
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received');
+  if (server) {
+    server.close();
+  }
+});

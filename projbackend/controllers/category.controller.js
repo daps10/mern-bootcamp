@@ -1,3 +1,4 @@
+const {t} = require('localizify');
 const httpStatus = require('http-status');
 const { categoryService } = require("../services");
 
@@ -7,20 +8,20 @@ exports.getCategories = async (req, res) => {
         if(categoryData.length > 0) {
             return res.status(httpStatus.OK).json({
                 status: httpStatus.OK,
-                message: "Category list has been found successfully!",
+                message: t("text_category_list_found"),
                 response: categoryData
             });
         } else {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,
-                message: "Category list has been not found!"
+                message: t("text_category_list_not_found")
             });
         }
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });     
     }
 };
@@ -32,20 +33,20 @@ exports.getCategory = async (req, res) => {
         if(!categoryData) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,
-                message: "Category details has not been found!"
+                message:  t("text_category_not_found"),
             });
         } 
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: "Category details has been found successfully!",
+            message: t("text_category_found"),
             response: categoryData
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });     
     }
 };
@@ -56,20 +57,20 @@ exports.createCategory = async (req, res) => {
         if(!categoryData) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                message: "Category has not been created!"
+                message: t("text_category_not_created")
             });
         } 
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: "Category details has been created successfully!",
+            message:  t("text_category_created"),
             response: categoryData
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });     
     }
 };
@@ -86,20 +87,20 @@ exports.updateCategory = async (req, res) => {
         if(!categoryResponse) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                message: "Category has not been updated!"
+                message:  t("text_category_not_updated")
             });
         }
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: "Category has been updated successfully!",
+            message:  t("text_category_updated"),
             response: categoryResponse
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });
     }
 };
@@ -116,19 +117,19 @@ exports.deleteCategory = async (req, res) => {
         if(!categoryResponse) {
             return res.status(httpStatus.BAD_REQUEST).json({
                 status: httpStatus.BAD_REQUEST,
-                message: "Category has not been deleted!"
+                message: t("text_category_not_deleted")
             });
         }
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: "Category has been deleted successfully!"
+            message: t("text_category_deleted")
         });
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Something went wrong!"
+            message: t("text_rest_something_went_wrong")
         });
     }
 };
