@@ -6,6 +6,7 @@ const{
     getCategories,
     createProduct,
     getProduct,
+    getAllProduct,
     updateProduct,
     deleteProduct
 } = require("../controllers/product.controller");
@@ -16,11 +17,15 @@ router.post('/photo/:productId', uploadedPhoto)
 // Get all categories
 router.get('/categories', getCategories)
 
+// Get product
+router.get('/:id', getProduct)
+
+// Get all product
+router.get('/', getAllProduct)
+
 // create product
 router.post('/create', createProduct)
 
-// Get product
-router.get('/:productId', getProduct)
 
 // Delete product
 router.delete('/:productId', deleteProduct)
