@@ -112,21 +112,22 @@ exports.createProduct = async (req, res) => {
     }
 };
 
-exports.deleteProduct = async (req, res) => {
+// Product updated
+exports.updateProduct = async (req, res) => {
     try {
-        const categoryId = req.params.id;
-        const categoryData = await categoryService.findById(categoryId);
-        if(!categoryData) {
-            return res.status(httpStatus.NOT_FOUND).json({
-                status: httpStatus.NOT_FOUND,
-                message:  t("text_category_not_found"),
+        const productId = req.params.id;
+        const productData = await productService.updateProduct(req.body, productId);
+        if(!productData) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                status: httpStatus.BAD_REQUEST,
+                message: t("text_product_not_updated")
             });
         } 
 
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
-            message: t("text_category_found"),
-            response: categoryData
+            message:  t("text_product_updated"),
+            response: productData
         });
     } catch (error) {
         console.log(error)
@@ -137,8 +138,31 @@ exports.deleteProduct = async (req, res) => {
     }
 };
 
-exports.updateProduct = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Product updated successfully!' 
-    });
+exports.deleteProduct = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        
+        // Update product
+        const productResponse = await productService.deleteProduct(
+            productId
+        );
+            
+        if(!productResponse) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                status: httpStatus.BAD_REQUEST,
+                message: t("text_product_not_deleted")
+            });
+        }
+
+        res.status(httpStatus.OK).json({
+            status: httpStatus.OK,
+            message: t("text_product_deleted")
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: t("text_rest_something_went_wrong")
+        });     
+    }
 };

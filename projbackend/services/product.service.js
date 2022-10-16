@@ -27,12 +27,17 @@ const createProduct = async (productBody) => {
 };
 
 const updateProduct = async (updateBody, id) => {
-    return {};
+    const product = await Product.findByIdAndUpdate(
+        { _id: id },
+        { $set: updateBody },
+        { new:true, useFindAndModify:false }
+    );
+    return (!product) ? product : await product.transform();
 };
 
 const deleteProduct = async (id) => {
-    const category = {}
-    return category;
+    const product = await Product.findByIdAndDelete(id);
+    return product;
 };
 
 module.exports = {
