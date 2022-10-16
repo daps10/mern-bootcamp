@@ -59,6 +59,8 @@
 	"text_file_type_not_valid":"The file type is not a valid type",
 	"text_file_size_too_big":"File size too big!",
 
+	"text_bulk_request_not_work":"Bulk operation failed!",
+
 	"text_user_logout": "You have successfully logged out!",
 	"text_end_of_string": "End of string"
 }
