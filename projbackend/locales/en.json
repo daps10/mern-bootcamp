@@ -45,6 +45,17 @@
 	"text_category_deleted": "Category has been deleted successfully!",
 	"text_category_not_deleted": "Category has not been deleted!",
 
+	"text_product_list_found": "Product list has been found successfully.",
+	"text_product_list_not_found": "Product list has been not found.",
+	"text_product_not_found": "Product details has not been found!",
+	"text_product_found": "Product details has been found successfully!",
+	"text_product_created": "Product has been created successfully!",
+	"text_product_not_created": "Product has not been created!",
+	"text_product_updated": "Product has been updated successfully!",
+	"text_product_not_updated": "Product has not been updated!",
+	"text_product_deleted": "Product has been deleted successfully!",
+	"text_product_not_deleted": "Product has not been deleted!",
+
 	"text_user_logout": "You have successfully logged out!",
 	"text_end_of_string": "End of string"
 }

@@ -1,7 +1,7 @@
-import mongoose, { ObjectId } from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
