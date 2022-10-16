@@ -1,6 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const { checkAuthorization } = require("../middlewares/auth/authorization");
 
+// Validate middleware 
+const validate  = require("../middlewares/validate")
+const productValidation = require('../validations/product.validation');
+
+// Fetch controllers
 const{
     uploadedPhoto,
     getCategories,
@@ -12,25 +18,56 @@ const{
 } = require("../controllers/product.controller");
 
 // upload photo
-router.post('/photo/:productId', uploadedPhoto)
+router.post(
+    '/photo/:productId', 
+    checkAuthorization,
+    uploadedPhoto
+);
 
 // Get all categories
-router.get('/categories', getCategories)
+router.get(
+    '/categories',
+    checkAuthorization, 
+    getCategories
+);
 
 // Get product
-router.get('/:id', getProduct)
+router.get(
+    '/:id', 
+    checkAuthorization,
+    getProduct
+);
 
 // Get all product
-router.get('/', getAllProduct)
+router.get(
+    '/', 
+    checkAuthorization,
+    getAllProduct
+);
 
 // create product
-router.post('/create', createProduct)
-
-
-// Delete product
-router.delete('/:productId', deleteProduct)
+router.post(
+    '/create', 
+    productValidation.addProduct,
+    validate,
+    checkAuthorization,
+    createProduct
+);
 
 // Update product
-router.put('/update/:productId', updateProduct)
+router.put(
+    '/update/:productId',
+    productValidation.updateProduct,
+    validate,
+    checkAuthorization, 
+    updateProduct
+);
+
+// Delete product
+router.delete(
+    '/:productId', 
+    checkAuthorization,
+    deleteProduct
+);
 
 module.exports = router;
