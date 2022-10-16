@@ -43,8 +43,8 @@ exports.getProduct = async (req, res) => {
                 status: httpStatus.NOT_FOUND,
                 message: t("text_product_not_found")
             });
-            
         }
+        productData.photo = undefined;
         return res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message: t("text_product_found"),
@@ -101,6 +101,7 @@ exports.createProduct = async (req, res) => {
             });
         } 
         
+        productData.photo = undefined;
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message:  t("text_product_created"),
@@ -127,6 +128,7 @@ exports.updateProduct = async (req, res) => {
             });
         } 
 
+        productData.photo = undefined;
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message:  t("text_product_updated"),
