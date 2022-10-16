@@ -22,7 +22,8 @@ const findById = async (id) => {
 };
 
 const createProduct = async (productBody) => {
-    return {}
+    const product = await new Product(productBody).save();
+    return (!product) ? product : await product.transform();
 };
 
 const updateProduct = async (updateBody, id) => {

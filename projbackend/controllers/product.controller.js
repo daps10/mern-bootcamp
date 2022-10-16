@@ -37,6 +37,7 @@ exports.getCategories = async (req, res) => {
     }
 };
 
+// Get product by id
 exports.getProduct = async (req, res) => {
     try {
         const productId = req.params.id;
@@ -62,6 +63,7 @@ exports.getProduct = async (req, res) => {
     }
 };
 
+// Get all products 
 exports.getAllProduct = async (req, res) => {
     try {
         const productData = await productService.findAllProducts();
@@ -85,13 +87,30 @@ exports.getAllProduct = async (req, res) => {
     }
 };
 
+// Product created
 exports.createProduct = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Product created successfully!' 
-    });
+    try {
+        const productData = await productService.createProduct(req.body);
+        if(!productData) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                status: httpStatus.BAD_REQUEST,
+                message: t("text_product_not_created")
+            });
+        } 
+
+        res.status(httpStatus.OK).json({
+            status: httpStatus.OK,
+            message:  t("text_product_created"),
+            response: productData
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: t("text_rest_something_went_wrong")
+        });     
+    }
 };
-
-
 
 exports.deleteProduct = async (req, res) => {
     try {
