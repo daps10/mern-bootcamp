@@ -1,7 +1,7 @@
-import mongoose, { ObjectId } from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -34,11 +34,25 @@ const productSchema = new Schema({
         default: 0
     },
     photo: {
-        type: Buffer,
+        data: Buffer,
         contentType: String
     }
 }, {
     timestamps: true
 });
+
+// creating methods
+productSchema.methods = {
+    transform: function() {
+        const transformed = {};
+        const fields = ['_id', 'name','description','price','stock','sold','photo', 'createdAt'];
+
+        fields.forEach((field) => {
+            transformed[field] = this[field];
+        });
+
+        return transformed;
+    }
+}
 
 module.exports = mongoose.model("Product", productSchema);

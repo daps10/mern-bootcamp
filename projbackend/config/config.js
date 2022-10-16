@@ -15,4 +15,8 @@ module.exports = {
         secret: process.env.ACCESS_TOKEN_SECRET,
         accessExpirationMinutes: process.env.ACCESS_TOKEN_LIFE
     },
+    fileMaxSize : 4 * 1024 * 1024,
+    allowedTypes : ["jpg", "jpeg", "png", "pdf"],
+    perPage: 10,
+    defaultPage: 1
 };

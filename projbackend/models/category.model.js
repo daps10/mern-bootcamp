@@ -33,6 +33,4 @@ categorySchema.methods = {
     }
 }
 
-
-
 module.exports = mongoose.model("Category", categorySchema);
