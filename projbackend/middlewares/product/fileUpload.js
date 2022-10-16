@@ -24,34 +24,40 @@ const fileUpload = async(req, res, next) => {
 
             const file = files.photo;
             
-            // checks if the file is valid
-            const isValid = await isFileValid(file);
-            if (!isValid) {
-                // throes error if file isn't valid
-                return res.status(httpStatus.BAD_REQUEST).json({
-                    status: httpStatus.BAD_REQUEST,
-                    message: t("text_file_type_not_valid"),
-                });
+            if(typeof file === "undefined"){
+                req.body = fields;
+                next();
+            } else {
+                // checks if the file is valid
+                const isValid = await isFileValid(file);
+                if (!isValid) {
+                    // throes error if file isn't valid
+                    return res.status(httpStatus.BAD_REQUEST).json({
+                        status: httpStatus.BAD_REQUEST,
+                        message: t("text_file_type_not_valid"),
+                    });
+                }
+    
+                // check file size
+                if(file.size > config.fileMaxSize) {
+                    return res.status(httpStatus.BAD_REQUEST).json({
+                        status: httpStatus.BAD_REQUEST,
+                        message: t("text_file_size_too_big"),
+                    });
+                }
+                // creates a valid name by removing spaces
+                const fileName =  await generateFileName() + "." + file.type.split("/").pop();
+                fs.renameSync(file.path, path.join(uploadFolder, fileName));
+    
+                // set fields in the req.body
+                req.body = fields;
+                req.body.photo = {};
+                req.body.photo.data = fs.readFileSync(path.join(uploadFolder, fileName));
+                req.body.photo.contentType = file.type;
+    
+                next();
             }
-
-            // check file size
-            if(file.size > config.fileMaxSize) {
-                return res.status(httpStatus.BAD_REQUEST).json({
-                    status: httpStatus.BAD_REQUEST,
-                    message: t("text_file_size_too_big"),
-                });
-            }
-            // creates a valid name by removing spaces
-            const fileName =  await generateFileName() + "." + file.type.split("/").pop();
-            fs.renameSync(file.path, path.join(uploadFolder, fileName));
-
-            // set fields in the req.body
-            req.body = fields;
-            req.body.photo = {};
-            req.body.photo.data = fs.readFileSync(path.join(uploadFolder, fileName));
-            req.body.photo.contentType = file.type;
-
-            next();
+            
         });
     } catch (error) {
         console.log("errr" , error);

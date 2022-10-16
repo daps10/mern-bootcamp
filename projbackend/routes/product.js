@@ -52,17 +52,18 @@ router.post(
 
 // Update product
 router.put(
-    '/update/:productId',
+    '/update/:id',
+    checkAuthorization,
+    isAdmin,
+    fileUpload,
     productValidation.updateProduct,
     validate,
-    checkAuthorization,
-    isAdmin, 
     updateProduct
 );
 
 // Delete product
 router.delete(
-    '/:productId', 
+    '/:id', 
     checkAuthorization,
     isAdmin,
     deleteProduct
