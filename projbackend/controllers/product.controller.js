@@ -1,5 +1,6 @@
 const {t} = require('localizify');
 const httpStatus = require('http-status');
+const _ = require('lodash');
 const { 
     productService,
     categoryService
@@ -62,9 +63,26 @@ exports.getProduct = async (req, res) => {
 };
 
 exports.getAllProduct = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Product retrieved successfully!' 
-    });
+    try {
+        const productData = await productService.findAllProducts();
+        if(_.size(productData) <= 0) {
+            return res.status(httpStatus.NOT_FOUND).json({
+                status: httpStatus.NOT_FOUND,
+                message: t("text_product_list_not_found")
+            });
+        }
+        return res.status(httpStatus.OK).json({
+            status: httpStatus.OK,
+            message: t("text_product_list_found"),
+            response: productData
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: t("text_rest_something_went_wrong")
+        });     
+    }
 };
 
 exports.createProduct = async (req, res) => {
