@@ -1,6 +1,7 @@
 const {t} = require('localizify');
 const httpStatus = require('http-status');
 const _ = require('lodash');
+const config = require('../config/config');
 
 const { 
     productService,
@@ -61,7 +62,13 @@ exports.getProduct = async (req, res) => {
 // Get all products 
 exports.getAllProduct = async (req, res) => {
     try {
-        const productData = await productService.findAllProducts();
+        const limit = parseInt(req.query.limit) || parseInt(config.perPage);
+        const page = parseInt(req.query.page) || parseInt(config.defaultPage);
+
+        const productData = await productService.findAllProducts(
+            limit,
+            page
+        );
         if(_.size(productData) <= 0) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,

@@ -17,5 +17,6 @@ module.exports = {
     },
     fileMaxSize : 4 * 1024 * 1024,
     allowedTypes : ["jpg", "jpeg", "png", "pdf"],
-
+    perPage: 10,
+    defaultPage: 1
 };

@@ -1,7 +1,14 @@
 const Product = require('../models/product.model')
 
-const findAllProducts = async () => {
-    const products = await Product.find();
+const findAllProducts = async (
+    limit,
+    page
+) => {
+    const products = await Product
+                            .find()
+                            .select("-photo")
+                            .skip((page * limit) - limit)
+                            .limit(limit);
     const response= [];
     for (let product of products) {
         product = await product.transform();
