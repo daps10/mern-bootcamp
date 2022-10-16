@@ -74,7 +74,7 @@ app.use("/api/category", categoryRoute)
 app.use("/api/order", orderRoute)
 
 // Listned on the port 
-app.listen(config.port, () => {
+let server =app.listen(config.port, () => {
   logger.info(`Listening to port : ${config.port || 8000}`);
 })
 
