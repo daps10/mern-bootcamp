@@ -19,7 +19,12 @@ const addProduct = [
         .not().isEmpty()
         .withMessage('Price should not be empty')    
         .isDecimal()
-        .withMessage('Price must be numeric.')
+        .withMessage('Price must be numeric.'),
+    check('stock', "Stock field is required")
+        .not().isEmpty()
+        .withMessage('Stock should not be empty')    
+        .isDecimal()
+        .withMessage('Stock must be numeric.')
 ];
 
 const updateProduct = [
@@ -41,7 +46,12 @@ const updateProduct = [
         .not().isEmpty()
         .withMessage('Price should not be empty')    
         .isDecimal()
-        .withMessage('Price must be numeric.')
+        .withMessage('Price must be numeric.'),
+    check('stock', "Stock field is required")
+        .not().isEmpty()
+        .withMessage('Stock should not be empty')    
+        .isDecimal()
+        .withMessage('Stock must be numeric.')
 ];
 
 module.exports = {

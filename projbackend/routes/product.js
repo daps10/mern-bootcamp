@@ -5,6 +5,7 @@ const { checkAuthorization } = require("../middlewares/auth/authorization");
 // Validate middleware 
 const validate  = require("../middlewares/validate")
 const productValidation = require('../validations/product.validation');
+const isAdmin = require('../middlewares/auth/isAdmin');
 
 // Fetch controllers
 const{
@@ -16,11 +17,13 @@ const{
     updateProduct,
     deleteProduct
 } = require("../controllers/product.controller");
+const fileUpload = require('../middlewares/product/fileUpload');
 
 // upload photo
 router.post(
-    '/photo/:productId', 
+    '/photo', 
     checkAuthorization,
+    isAdmin,
     uploadedPhoto
 );
 
@@ -48,9 +51,11 @@ router.get(
 // create product
 router.post(
     '/create', 
+    checkAuthorization,
+    isAdmin,
+    fileUpload,
     productValidation.addProduct,
     validate,
-    checkAuthorization,
     createProduct
 );
 
@@ -59,7 +64,8 @@ router.put(
     '/update/:productId',
     productValidation.updateProduct,
     validate,
-    checkAuthorization, 
+    checkAuthorization,
+    isAdmin, 
     updateProduct
 );
 
@@ -67,6 +73,7 @@ router.put(
 router.delete(
     '/:productId', 
     checkAuthorization,
+    isAdmin,
     deleteProduct
 );
 

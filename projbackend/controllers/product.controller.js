@@ -1,6 +1,7 @@
 const {t} = require('localizify');
 const httpStatus = require('http-status');
 const _ = require('lodash');
+
 const { 
     productService,
     categoryService
@@ -98,6 +99,7 @@ exports.createProduct = async (req, res) => {
             });
         } 
 
+        productData.photo = undefined; // photo should be undefined at first place
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message:  t("text_product_created"),

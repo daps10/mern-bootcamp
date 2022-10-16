@@ -55,6 +55,9 @@
 	"text_product_not_updated": "Product has not been updated!",
 	"text_product_deleted": "Product has been deleted successfully!",
 	"text_product_not_deleted": "Product has not been deleted!",
+	"text_file_upload_error":"There was an error parsing the files",
+	"text_file_type_not_valid":"The file type is not a valid type",
+	"text_file_size_too_big":"File size too big!",
 
 	"text_user_logout": "You have successfully logged out!",
 	"text_end_of_string": "End of string"
