@@ -2,11 +2,13 @@ const Product = require('../models/product.model')
 
 const findAllProducts = async (
     limit,
-    page
+    page,
+    sortBy
 ) => {
     const products = await Product
                             .find()
                             .select("-photo")
+                            .sort([[sortBy, "asc"]])
                             .skip((page * limit) - limit)
                             .limit(limit);
     const response= [];

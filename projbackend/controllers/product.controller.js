@@ -64,10 +64,11 @@ exports.getAllProduct = async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || parseInt(config.perPage);
         const page = parseInt(req.query.page) || parseInt(config.defaultPage);
-
+        const sortBy = req.query.sortBy || "name"
         const productData = await productService.findAllProducts(
             limit,
-            page
+            page,
+            sortBy
         );
         if(_.size(productData) <= 0) {
             return res.status(httpStatus.NOT_FOUND).json({
