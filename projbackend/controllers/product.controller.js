@@ -7,12 +7,6 @@ const {
     categoryService
 } = require("../services");
 
-exports.uploadedPhoto = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Uploaded photo successfully' 
-    });
-};
-
 // Get categories
 exports.getCategories = async (req, res) => {
     try {
@@ -98,8 +92,7 @@ exports.createProduct = async (req, res) => {
                 message: t("text_product_not_created")
             });
         } 
-
-        productData.photo = undefined; // photo should be undefined at first place
+        
         res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message:  t("text_product_created"),

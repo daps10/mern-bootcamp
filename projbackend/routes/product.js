@@ -9,7 +9,6 @@ const isAdmin = require('../middlewares/auth/isAdmin');
 
 // Fetch controllers
 const{
-    uploadedPhoto,
     getCategories,
     createProduct,
     getProduct,
@@ -18,14 +17,6 @@ const{
     deleteProduct
 } = require("../controllers/product.controller");
 const fileUpload = require('../middlewares/product/fileUpload');
-
-// upload photo
-router.post(
-    '/photo', 
-    checkAuthorization,
-    isAdmin,
-    uploadedPhoto
-);
 
 // Get all categories
 router.get(
