@@ -77,7 +77,27 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.updateOrder = async (req, res) => {
-    res.status(200).json({ 
-        msg: 'Order updated successfully!' 
-    });
+    try {
+        const orderId = req.params.id;
+        const status = req.params.status;
+        const orderResponse = await orderService.updateOrder(status, orderId);
+        if(!orderResponse) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                status: httpStatus.BAD_REQUEST,
+                message: t("text_order_not_updated")
+            });
+        } 
+
+        res.status(httpStatus.OK).json({
+            status: httpStatus.OK,
+            message:  t("text_order_updated"),
+            response: orderResponse
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
+            message: t("text_rest_something_went_wrong")
+        });   
+    }
 };

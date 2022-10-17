@@ -12,8 +12,8 @@ const getOrderById = async(req, res, next) => {
                 message: t("text_order_not_found")
             });
         }
-
-        req.orderData = (!order) ? order : await order.transform();
+        req.orderData = order;
+        // req.orderData = (!order) ? order : await order.transform();
         next();
 
     } catch (error) {

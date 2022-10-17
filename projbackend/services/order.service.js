@@ -5,7 +5,7 @@ const findAllOrders = async () => {
                                 .populate("user", "_id name");
     const response= [];
     for (let order of orders) {
-        order = await order.transform();
+        // order = await order.transform();
         response.push(order)
     }
 
@@ -14,11 +14,16 @@ const findAllOrders = async () => {
 
 const createOrder = async (orderBody) => {
     const order = await new Order(orderBody).save();
-    return (!order) ? order : await order.transform();
+    return order;
 };
 
-const updateOrder = async (orderBody) => {
-    return {};
+const updateOrder = async (status, id) => {
+    const order = await Order.findByIdAndUpdate(
+        { _id: id },
+        { $set: { status: status } },
+        { new:true, useFindAndModify:false }
+    );
+    return order;
 };
 
 module.exports = {

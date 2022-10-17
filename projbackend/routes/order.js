@@ -44,6 +44,10 @@ router.post(
 // Update order
 router.put(
     '/update/:status/:orderId', 
+    checkAuthorization,
+    pushOrderInPurchaseList,
+    updateStock,
+    getUser,
     updateOrder
 )
 
