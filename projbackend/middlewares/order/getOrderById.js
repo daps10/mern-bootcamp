@@ -13,7 +13,7 @@ const getOrderById = async(req, res, next) => {
             });
         }
 
-        req.orderData = order;
+        req.orderData = (!order) ? order : await order.transform();
         next();
 
     } catch (error) {

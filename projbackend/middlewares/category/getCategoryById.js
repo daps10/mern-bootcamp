@@ -11,7 +11,7 @@ const getCategoryById = async(req, res, next) => {
             });
         }
 
-        req.categoryData = category;
+        req.categoryData = (!category) ? category : await category.transform();
         next();
 
     } catch (error) {

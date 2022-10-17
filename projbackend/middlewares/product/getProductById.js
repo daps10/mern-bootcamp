@@ -10,8 +10,9 @@ const getProductById = async(req, res, next) => {
                 message: t("text_product_not_found")
             });
         }
+
         product.photo = undefined;
-        req.productData = product;
+        req.productData = (!product) ? product : await product.transform();
         next();
 
     } catch (error) {

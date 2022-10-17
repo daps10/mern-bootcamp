@@ -11,9 +11,8 @@ const getUser = async(req, res, next) => {
             });
         }
 
-        req.userData = user;
+        req.userData = (!user) ? user : await user.transform();
         next();
-
     } catch (error) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
             status: httpStatus.INTERNAL_SERVER_ERROR,
