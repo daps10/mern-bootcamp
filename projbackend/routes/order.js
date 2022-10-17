@@ -8,6 +8,10 @@ const {
     updateOrder
 } = require("../controllers/order.controller")
 
+const isAdmin = require('../middlewares/auth/isAdmin');
+const pushOrderInPurchaseList = require('../middlewares/pushOrderInPurchaseList');
+const updateStock = require('../middlewares/product/updateStock');
+
 // Get all orders
 router.get('/:userId', getAllOrders)
 
