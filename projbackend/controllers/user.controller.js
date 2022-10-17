@@ -35,9 +35,7 @@ exports.listAllUser = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const userId = req.params.id;
-        const userRes = await userService.findById(userId);
-        
+        const userRes = req.userData;
         if(!userRes || userRes === null) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,

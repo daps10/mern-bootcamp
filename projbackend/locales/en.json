@@ -61,6 +61,13 @@
 
 	"text_bulk_request_not_work":"Bulk operation failed!",
 
+	"text_order_found":"Order details has been found successfully!",
+	"text_order_not_found":"Order details has not been found!",
+	"text_order_created":"Order has been created successfully!",
+	"text_order_not_created": "Order has not been created!",
+	"text_order_updated": "Order status has been updated successfully!",
+	"text_order_not_updated": "Order status has not been updated!",
+
 	"text_user_logout": "You have successfully logged out!",
 	"text_end_of_string": "End of string"
 }

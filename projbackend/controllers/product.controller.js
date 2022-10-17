@@ -36,15 +36,13 @@ exports.getCategories = async (req, res) => {
 // Get product by id
 exports.getProduct = async (req, res) => {
     try {
-        const productId = req.params.id;
-        const productData = await productService.findById(productId);
+        const productData = req.productData;
         if(!productData || productData == null) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,
                 message: t("text_product_not_found")
             });
         }
-        productData.photo = undefined;
         return res.status(httpStatus.OK).json({
             status: httpStatus.OK,
             message: t("text_product_found"),
