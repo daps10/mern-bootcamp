@@ -6,6 +6,7 @@ const { checkAuthorization } = require("../middlewares/auth/authorization");
 const validate  = require("../middlewares/validate")
 const productValidation = require('../validations/product.validation');
 const isAdmin = require('../middlewares/auth/isAdmin');
+const getProductById = require('../middlewares/product/getProductById');
 
 // Fetch controllers
 const{
@@ -29,6 +30,7 @@ router.get(
 router.get(
     '/:id', 
     checkAuthorization,
+    getProductById,
     getProduct
 );
 

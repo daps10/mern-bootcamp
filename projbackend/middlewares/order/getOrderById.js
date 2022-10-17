@@ -3,7 +3,9 @@ const Order = require('../../models/order.model');
 
 const getOrderById = async(req, res, next) => {
     try {
-        const order = await Order.findById(req.params.id);
+        const order = await Order
+                                .findById(req.params.id)
+                                .populate("products.product", "name price");
         if(!order){  
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,

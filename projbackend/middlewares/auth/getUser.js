@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const User = require('../../models/user.model');
 
-const getUserById = async(req, res, next) => {
+const getUser = async(req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
         if(!user){  
@@ -22,4 +22,4 @@ const getUserById = async(req, res, next) => {
     }
 }
 
-module.exports = getUserById;
+module.exports = getUser;
