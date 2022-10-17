@@ -13,7 +13,8 @@ const {
     updateUser,
     listAllUser,
     getPurchaseList
-} = require("../controllers/user.controller")
+} = require("../controllers/user.controller");
+const getUser = require('../middlewares/auth/getUser');
 
 // list user
 router.get(
@@ -26,6 +27,7 @@ router.get(
 router.get(
     '/:id', 
     checkAuthorization,
+    getUser,
     getUserById
 );
 

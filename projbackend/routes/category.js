@@ -8,6 +8,7 @@ const isCategoryNameTaken = require('../middlewares/category/isCategoryNameTaken
 const isUpdateCategoryNameTaken = require('../middlewares/category/isUpdateCategoryNameTaken');
 const checkCategoryExist = require('../middlewares/category/checkCategoryExist');
 const isAdmin = require('../middlewares/auth/isAdmin');
+const getCategoyById = require("../middlewares/category/getCategoryById");
 
 // controllers
 const {
@@ -30,6 +31,7 @@ router.get(
 router.get(
     '/:id', 
     checkAuthorization,
+    getCategoyById,
     getCategory
 );
 

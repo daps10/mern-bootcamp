@@ -20,16 +20,6 @@ const findAllProducts = async (
     return response;
 };
 
-const findOne = async (params) => {
-    const product = await Product.findOne(params);
-    return (!product) ? product : await product.transform();
-};
-
-const findById = async (id) => {
-    const product = await Product.findById(id);
-    return (!product) ? product : await product.transform();
-};
-
 const createProduct = async (productBody) => {
     const product = await new Product(productBody).save();
     return (!product) ? product : await product.transform();
@@ -51,8 +41,6 @@ const deleteProduct = async (id) => {
 
 module.exports = {
     findAllProducts,
-    findOne,
-    findById,
     createProduct,
     updateProduct,
     deleteProduct

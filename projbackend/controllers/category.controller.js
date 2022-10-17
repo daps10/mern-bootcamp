@@ -28,8 +28,8 @@ exports.getCategories = async (req, res) => {
 
 exports.getCategory = async (req, res) => {
     try {
-        const categoryId = req.params.id;
-        const categoryData = await categoryService.findById(categoryId);
+        const categoryData = req.categoryData;
+        
         if(!categoryData) {
             return res.status(httpStatus.NOT_FOUND).json({
                 status: httpStatus.NOT_FOUND,

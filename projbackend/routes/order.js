@@ -8,16 +8,47 @@ const {
     updateOrder
 } = require("../controllers/order.controller")
 
+const { checkAuthorization } = require("../middlewares/auth/authorization");
+const isAdmin = require('../middlewares/auth/isAdmin');
+const pushOrderInPurchaseList = require('../middlewares/pushOrderInPurchaseList');
+const updateStock = require('../middlewares/product/updateStock');
+const getOrderById = require('../middlewares/order/getOrderById');
+const getUser = require('../middlewares/auth/getUser');
+
 // Get all orders
-router.get('/:userId', getAllOrders)
+router.get(
+    '/:userId', 
+    checkAuthorization,
+    isAdmin,
+    getAllOrders
+)
 
 // Get order
-router.get('/:orderId', getOrder)
+router.get(
+    '/:id',
+    checkAuthorization,
+    getOrderById, 
+    getOrder
+);
 
 // Create order
-router.post('/create', createOrder)
+router.post(
+    '/create', 
+    checkAuthorization,
+    pushOrderInPurchaseList,
+    updateStock,
+    getUser,
+    createOrder
+)
 
 // Update order
-router.put('/update/:status/:orderId', updateOrder)
+router.put(
+    '/update/:status/:orderId', 
+    checkAuthorization,
+    pushOrderInPurchaseList,
+    updateStock,
+    getUser,
+    updateOrder
+)
 
 module.exports = router;
