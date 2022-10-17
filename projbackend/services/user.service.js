@@ -42,16 +42,6 @@ const findAllOrders = async (params) => {
     // return response;
 };
 
-const findOne = async (params) => {
-    const user = await User.findOne(params);
-    return (!user) ? user : await user.transform();
-};
-
-const findById = async (id) => {
-    const user = await User.findById(id);
-    return (!user) ? user : await user.transform();
-};
-
 const updateUser = async (updateBody, id) => {
     const user = await User.findByIdAndUpdate(
         { _id: id },
@@ -65,7 +55,5 @@ const updateUser = async (updateBody, id) => {
 module.exports = {
     findAllUsers,
     findAllOrders,
-    findOne,
-    findById,
     updateUser
 };

@@ -12,16 +12,6 @@ const findAllCategories = async () => {
     return response;
 };
 
-const findOne = async (params) => {
-    const category = await Category.findOne(params);
-    return (!category) ? category : await Category.transform();
-};
-
-const findById = async (id) => {
-    const category = await Category.findById(id);
-    return (!category) ? category : await category.transform();
-};
-
 const createCategory = async (categoryBody) => {
     const category = await new Category(categoryBody).save();
     return (!category) ? category : await category.transform();
@@ -43,8 +33,6 @@ const deleteCategory = async (id) => {
 
 module.exports = {
     findAllCategories,
-    findOne,
-    findById,
     createCategory,
     updateCategory,
     deleteCategory
