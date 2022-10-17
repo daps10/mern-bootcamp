@@ -8,20 +8,25 @@ const {
     updateOrder
 } = require("../controllers/order.controller")
 
+const { checkAuthorization } = require("../middlewares/auth/authorization");
 const isAdmin = require('../middlewares/auth/isAdmin');
 const pushOrderInPurchaseList = require('../middlewares/pushOrderInPurchaseList');
 const updateStock = require('../middlewares/product/updateStock');
 const getOrderById = require('../middlewares/order/getOrderById');
+const getUser = require('../middlewares/auth/getUser');
 
 // Get all orders
 router.get(
     '/:userId', 
+    checkAuthorization,
+    isAdmin,
     getAllOrders
 )
 
 // Get order
 router.get(
     '/:id',
+    checkAuthorization,
     getOrderById, 
     getOrder
 );
@@ -29,6 +34,10 @@ router.get(
 // Create order
 router.post(
     '/create', 
+    checkAuthorization,
+    pushOrderInPurchaseList,
+    updateStock,
+    getUser,
     createOrder
 )
 

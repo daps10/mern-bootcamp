@@ -1,20 +1,20 @@
 const Order = require('../models/order.model')
 
 const findAllOrders = async () => {
-    const response = {}
+    const orders = await Order.find()
+                                .populate("user", "_id name");
+    const response= [];
+    for (let order of orders) {
+        order = await order.transform();
+        response.push(order)
+    }
+
     return response;
 };
 
-const findOne = async (params) => {
-    return {};
-};
-
-const findById = async (id) => {
-    return {};
-};
-
 const createOrder = async (orderBody) => {
-    return {};
+    const order = await new Order(orderBody).save();
+    return (!order) ? order : await order.transform();
 };
 
 const updateOrder = async (orderBody) => {
@@ -23,8 +23,6 @@ const updateOrder = async (orderBody) => {
 
 module.exports = {
     findAllOrders,
-    findOne,
-    findById,
     createOrder,
     updateOrder
 };
