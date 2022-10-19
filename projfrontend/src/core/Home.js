@@ -2,10 +2,14 @@ import React from 'react'
 import "../styles.css"
 import { API } from "../backend";
 import Base from './Base';
+import Menu from './Menu';
 
 const Home = () => {
     console.log("API IS ", API)
     return (
+        <>
+        
+        <Menu/>
         <Base title='Home Page' description='My description'>
             <div className="row">
                 <div className="col-4">
@@ -20,6 +24,7 @@ const Home = () => {
             </div>
             <h1 className='text-white'>Home is available</h1>
         </Base>
+        </>
     )
 }
 
