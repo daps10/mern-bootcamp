@@ -1,7 +1,5 @@
 import React from 'react'
-// import Home from './Home';
-// import Menu from './Menu';
-// import { Route, Routes} from 'react-router-dom';
+import Menu from './Menu';
 
 const Base= ({
     title="My Title",
@@ -12,6 +10,8 @@ const Base= ({
 }) => {
     return (
         <>
+            <Menu history="/" />
+        
             <div className="container-fluid">
                 <div className="jumbotron bg-dark text-white text-center">
                     <h2 className="display-4"> { title } </h2>
