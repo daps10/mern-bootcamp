@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <>
         
-        <Menu/>
+        <Menu history="/" />
         <Base title='Home Page' description='My description'>
             <div className="row">
                 <div className="col-4">

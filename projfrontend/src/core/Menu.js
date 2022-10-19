@@ -1,32 +1,43 @@
 import React from 'react'
 import { 
-    Link
+    Link,
+    useLocation 
 } from "react-router-dom"
 
-export default function Menu() {
+
+export default function Menu({history}) {
+    const location = useLocation();
+
+    const currentTab = (path) =>{
+        if(location.pathname === path) {
+            return { color: "#2ecc72" }
+        } else {
+            return { color: "#FFFFFF" } 
+        }
+    }    
     return (
         <div>
             <ul className="nav nav-tabs bg-dark">
                 <li className="nav-item">
-                    <Link className='nav-link' to="/acbou">Home</Link>
+                    <Link style={ currentTab( "/") } className='nav-link' to="/">Home</Link>
+                </li>
+                <li style={ currentTab( "/cart") } className="nav-item">
+                    <Link className='nav-link' to="/cart">Cart</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className='nav-link' to="/">Cart</Link>
+                    <Link style={ currentTab( "/user/dashboard") } className='nav-link' to="/user/dashboard">Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className='nav-link' to="/">Dashboard</Link>
+                    <Link style={ currentTab( "/admin/dashboard") } className='nav-link' to="/admin/dashboard">A.Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className='nav-link' to="/">A.Dashboard</Link>
+                    <Link style={ currentTab("/signup") } className='nav-link' to="/signup">Signup</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className='nav-link' to="/">Signup</Link>
+                    <Link style={ currentTab("/signin") } className='nav-link' to="/signin">Signin</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className='nav-link' to="/">Signin</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className='nav-link' to="/">Signout</Link>
+                    <Link style={ currentTab("/signout") } className='nav-link' to="/signout">Signout</Link>
                 </li>
             </ul>
         </div>   
