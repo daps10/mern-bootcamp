@@ -21,8 +21,8 @@ export default function Menu({history}) {
                 <li className="nav-item">
                     <Link style={ currentTab( "/") } className='nav-link' to="/">Home</Link>
                 </li>
-                <li style={ currentTab( "/cart") } className="nav-item">
-                    <Link className='nav-link' to="/cart">Cart</Link>
+                <li className="nav-item">
+                    <Link style={ currentTab( "/cart") } className='nav-link' to="/cart">Cart</Link>
                 </li>
                 <li className="nav-item">
                     <Link style={ currentTab( "/user/dashboard") } className='nav-link' to="/user/dashboard">Dashboard</Link>
