@@ -1,4 +1,5 @@
 import React from 'react'
+import Menu from './Menu';
 
 const Base= ({
     title="My Title",
@@ -9,6 +10,8 @@ const Base= ({
 }) => {
     return (
         <>
+            <Menu history="/" />
+        
             <div className="container-fluid">
                 <div className="jumbotron bg-dark text-white text-center">
                     <h2 className="display-4"> { title } </h2>
@@ -16,7 +19,7 @@ const Base= ({
                 </div>
                 <div className={ className }>{ children} </div>
             </div>
-            <footer className="footer bg-dark mt-auto py-3">
+            {/* <footer className="footer bg-dark mt-auto py-3">
                 <div className="container-fluid bg-success text-white text-center py-3">
                     <h4>If you got any question, feel free to reach out!</h4>
                     <button className="btn btn-warning btn-lg">Contact US</button>
@@ -26,7 +29,7 @@ const Base= ({
                         An amazing <span className='text-white'>MERN</span>  bootcamp
                     </span>
                 </div>
-            </footer>
+            </footer> */}
         </>
     )
 }
