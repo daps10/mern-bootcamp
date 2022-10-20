@@ -6,6 +6,7 @@ import Base from './Base';
 const Home = () => {
     console.log("API IS ", API)
     return (
+        <>
         <Base title='Home Page' description='My description'>
             <div className="row">
                 <div className="col-4">
@@ -20,6 +21,7 @@ const Home = () => {
             </div>
             <h1 className='text-white'>Home is available</h1>
         </Base>
+        </>
     )
 }
 
