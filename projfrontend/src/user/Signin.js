@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { isAuthenticated, signin } from "../auth/helper";
+import  { useNavigate } from 'react-router-dom'
+import { signin } from "../auth/helper";
 import Base from '../core/Base';
 
+
 const Signin = () => {
+    let navigate = useNavigate();
+
     const [values, setValues] = useState({
         email:"",
         password: "",
@@ -95,8 +99,8 @@ const Signin = () => {
             }
         }
 
-        if(didRedirect && userdata.accessToken) {
-            
+        if(userdata.accessToken) {
+            return navigate('/');;
         }
 
     }
