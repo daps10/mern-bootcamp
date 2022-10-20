@@ -1,36 +1,113 @@
-import React, { useState } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState } from "react";
+import { isAuthenticated, signin } from "../auth/helper";
 import Base from '../core/Base';
-import { signin, authenticate, isAuthenticated } from "../auth/helper/index"; 
 
 const Signin = () => {
     const [values, setValues] = useState({
         email:"",
-        password:"",
+        password: "",
         error: "",
         loading: false,
-        didRedirect: false
+        didRedirect:false
     });
 
-    // destructure 
-    const [email, password, error, loading, didRedirect] = values;
-    const { user } = isAuthenticated();
+    const [userdata, setUserData] = useState({});
 
-    // Onchange method
+    const { email, password, error, loading, didRedirect } = values; // desctructre the values
+
     const onHandleChange = name => event => {
         setValues({
             ...values,
-            error:false,
+            error: false,
             [name]: event.target.value
         })
     }
 
-    const successMessage = () => {
+    const onSubmit = async (event) => {
+        event.preventDefault();
+
+        setValues({
+            ...values,
+            error: false,
+            loading: true
+        });
+
+        const response = await signin({
+            email, 
+            password
+        });
+        if(response.status !== 200){
+            setValues({ 
+                ...values, 
+                error: response.message, 
+                loading: false 
+            });
+        } else {
+            console.log(response)
+            setUserData(response.response);
+            setValues({ 
+                ...values, 
+                email:"",
+                password:"",
+                error: "", 
+                loading: false,
+                didRedirect: true
+            });
+        }
+    }
+
+    const signINForm = () => {
         return (
             <div className="row">
                 <div className="col-md-6 offset-sm-3 text-left">
-                    <div className="alert alert-success" style={{display: success? "": "none"}}>
-                        New Account was created successfully. Please <Link to="/signin"> Login Here </Link>
+                    <form >
+                        <div className="form-group">
+                            <label className="text-light">Email</label>
+                            <input 
+                            className="form-control" 
+                            type="email"
+                            value={email}
+                            onChange={onHandleChange("email")}/>
+                        </div>
+                        <div className="form-group">
+                            <label className="text-light">Password</label>
+                            <input 
+                            className="form-control" 
+                            type="password"
+                            value={password}
+                            onChange={onHandleChange("password")}/>
+                        </div>
+                        <button className="form-control btn btn-success btn-block mt-2" onClick={ onSubmit }>
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        )
+    }
+
+    const performRedirect = () => {
+        if( didRedirect ){
+            if( userdata && userdata.role === 1 ) {
+                return <p>Redirect to admin</p>
+            } else {
+                return <p>Redirect to user</p>
+            }
+        }
+
+        if(didRedirect && userdata.accessToken) {
+            
+        }
+
+    }
+
+    const successMessage = () => {
+        console.log("sdsdsd")
+        return (
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div className="alert alert-success" style={{display: didRedirect? "": "none"}}>
+                        You have successfully logged in!
                     </div>
                 </div>
             </div>
@@ -49,68 +126,16 @@ const Signin = () => {
         )
     }
 
-    const onSubmit = async(event) => {
-        event.preventDefault();
-
-        setValues({
-            ...values,
-            error:false,
-            loading: true
-        });
-
-        const response = await signup({
-            email,
-            password
-        });
-        console.log("response found === ", response);
-        if(response.status !== 200){
-            setValues({ 
-                ...values, 
-                error: response.message, 
-                loading: false 
-            });
-        } else {
-            setValues({ 
-                ...values, 
-                email:"",
-                password:"",
-                error: "", 
-                loading: false,
-                didRedirect:true
-            });
-        }
-    }
-    
-    const signInForm = () => {
-        return (
-            <div className="row">
-                <div className="col-md-6 offset-sm-3 text-left">
-                    <form >
-                        <div className="form-group">
-                            <label className="text-light">Email</label>
-                            <input className="form-control" type="email" value={email} onChange={ onHandleChange }/>
-                        </div>
-                        <div className="form-group">
-                            <label className="text-light">Password</label>
-                            <input className="form-control" type="password" value={password} onChange={ onHandleChange }/>
-                        </div>
-                        <button className="form-control btn btn-success btn-block mt-2" onClick={onSubmit}>
-                            Submit
-                        </button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
-
     return (
-    <>
+        <>
         <Base title="Sign in page" description="A page for user to signin">
             { successMessage() }
             { errorMessage() }
-            { signInForm() }
+            { signINForm() }
+            { performRedirect() }
+            <p className="text-white text-center">HII</p>
         </Base>
-    </>
+        </>
     )
 }
 
