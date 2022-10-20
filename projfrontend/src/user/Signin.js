@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { isAuthenticated, signin } from "../auth/helper";
+import  { useNavigate } from 'react-router-dom'
+import { signin } from "../auth/helper";
 import Base from '../core/Base';
 
+
 const Signin = () => {
+    let navigate = useNavigate();
+
     const [values, setValues] = useState({
         email:"",
         password: "",
@@ -37,13 +41,17 @@ const Signin = () => {
             password
         });
         if(response.status !== 200){
+            localStorage.setItem('user', {});
+            localStorage.setItem('accessToken', null);
             setValues({ 
                 ...values, 
                 error: response.message, 
                 loading: false 
             });
         } else {
-            console.log(response)
+            localStorage.setItem('user', JSON.stringify(response.response));
+            localStorage.setItem('accessToken', response.response.accessToken);
+
             setUserData(response.response);
             setValues({ 
                 ...values, 
@@ -95,23 +103,19 @@ const Signin = () => {
             }
         }
 
-        if(didRedirect && userdata.accessToken) {
-            
+        if(userdata.accessToken) {
+            return navigate('/');;
         }
-
     }
 
-    const successMessage = () => {
-        console.log("sdsdsd")
+    const loadingMessage = () => {
         return (
-            <div className="row">
-                <div className="col-md-6 offset-sm-3 text-left">
-                    <div className="alert alert-success" style={{display: didRedirect? "": "none"}}>
-                        You have successfully logged in!
-                    </div>
+            loading && (
+                <div className="alert alert-info">
+                    <h3>Loading ....</h3>
                 </div>
-            </div>
-        )
+            )
+        );
     }
 
     const errorMessage = () => {
@@ -129,7 +133,7 @@ const Signin = () => {
     return (
         <>
         <Base title="Sign in page" description="A page for user to signin">
-            { successMessage() }
+            { loadingMessage() }
             { errorMessage() }
             { signINForm() }
             { performRedirect() }
