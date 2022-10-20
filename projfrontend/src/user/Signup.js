@@ -33,15 +33,17 @@ const Signup = () => {
             email,
             password
         });
-        console.log("response found === ", response);
         if(response.status !== 201){
-            console.log(response.message)
+            localStorage.setItem('user', {});
+            localStorage.setItem('accessToken', null);
             setValues({ 
                 ...values, 
                 error: response.message, 
                 success: false 
             });
         } else {
+            localStorage.setItem('user', JSON.stringify(response.response));
+            localStorage.setItem('accessToken', response.response.accessToken);
             setValues({ 
                 ...values, 
                 name:"",
