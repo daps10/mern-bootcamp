@@ -4,10 +4,11 @@ export const signup = async (user) => {
     try {
         const signupParams = {
             "name": user.name,
+            "lastname": user.lastname,
             "email": user.email,
             "password": user.password
         };
-        
+
         // Simple POST request with a JSON body using fetch
         const requestOptions = {
             method: 'POST',
@@ -17,7 +18,6 @@ export const signup = async (user) => {
             body: JSON.stringify( signupParams )
         };
         const URL =  API + "auth/signup";
-            
         const response = await fetch (URL, requestOptions);
         return await response.json();
     } catch (error) {
@@ -63,7 +63,7 @@ export const signout = async (next) => {
             
             const URL =  API + "auth/signout";
             const response = await fetch (URL, requestOptions);
-            const json = await response.json();
+            await response.json();
             localStorage.removeItem("authToken");
             next();
         }
