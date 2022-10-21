@@ -64,8 +64,8 @@ export const signout = async (next) => {
             const URL =  API + "auth/signout";
             const response = await fetch (URL, requestOptions);
             await response.json();
-            localStorage.removeItem('user');
-            localStorage.removeItem("accessToken");
+            localStorage.setItem('user', {});
+            localStorage.setItem('accessToken', undefined);
             next();
         }
     } catch (error) {
@@ -82,13 +82,13 @@ export const authenticate = (data, next) => {
 }
 
 export const isAuthenticated = () => {
-    if(typeof window !== "undefined") {
-        return false;
-    }
+    // if(typeof window !== "undefined") {
+    //     return false;
+    // }
 
     if(localStorage.getItem("accessToken")) {
         return localStorage.getItem("accessToken")
     } else {
-        return false;
+        return undefined;
     }
 }

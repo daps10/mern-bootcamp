@@ -42,13 +42,14 @@ const Signin = () => {
         });
         if(response.status !== 200){
             localStorage.setItem('user', {});
-            localStorage.setItem('accessToken', null);
+            localStorage.setItem('accessToken', undefined);
             setValues({ 
                 ...values, 
                 error: response.message, 
                 loading: false 
             });
         } else {
+            console.log(response.response)
             localStorage.setItem('user', JSON.stringify(response.response));
             localStorage.setItem('accessToken', response.response.accessToken);
 

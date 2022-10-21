@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { 
     Link,
     useNavigate 
@@ -30,20 +30,22 @@ export default function Menu({history}) {
                 <li className="nav-item">
                     <Link style={ currentTab( "/admin/dashboard") } className='nav-link' to="/admin/dashboard">A.Dashboard</Link>
                 </li>
-                <li className="nav-item">
-                    <Link style={ currentTab("/signup") } className='nav-link' to="/signup">Signup</Link>
-                </li>
-                <li className="nav-item">
-                    <Link style={ currentTab("/signin") } className='nav-link' to="/signin">Signin</Link>
-                </li>
-                {/* <li className="nav-item">
-                    <Link style={ currentTab("/signout") } className='nav-link' to="/signout">Signout</Link>
-                </li> */}
-                {console.log(isAuthenticated())}
                 {
-                    isAuthenticated() && (
+                    ( isAuthenticated() === "undefined") && (
+                        <Fragment>
+                            <li className="nav-item">
+                                <Link style={ currentTab("/signup") } className='nav-link' to="/signup">Signup</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link style={ currentTab("/signin") } className='nav-link' to="/signin">Signin</Link>
+                            </li>
+                        </Fragment>
+                    )
+                }
+
+                {
+                    ( isAuthenticated() !== "undefined") && (
                         <li className="nav-item">
-                            {/* <Link className='nav-link' to="/signout">Signout</Link> */}
                             <span 
                             className='nav-link text-warning' 
                             onClick={ () => {
