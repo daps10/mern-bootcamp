@@ -35,7 +35,7 @@ const Signup = () => {
         });
         if(response.status !== 201){
             localStorage.setItem('user', {});
-            localStorage.setItem('accessToken', null);
+            localStorage.setItem('accessToken', undefined);
             setValues({ 
                 ...values, 
                 error: response.message, 
