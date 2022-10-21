@@ -1,12 +1,12 @@
 import React from 'react'
 import { 
     Link,
-    useLocation 
+    useNavigate 
 } from "react-router-dom"
-
+import { signout, isAuthenticated } from '../auth/helper';
 
 export default function Menu({history}) {
-    const location = useLocation();
+    const location = useNavigate();
 
     const currentTab = (path) =>{
         if(location.pathname === path) {
@@ -36,9 +36,26 @@ export default function Menu({history}) {
                 <li className="nav-item">
                     <Link style={ currentTab("/signin") } className='nav-link' to="/signin">Signin</Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <Link style={ currentTab("/signout") } className='nav-link' to="/signout">Signout</Link>
-                </li>
+                </li> */}
+                {console.log(isAuthenticated())}
+                {
+                    isAuthenticated() && (
+                        <li className="nav-item">
+                            {/* <Link className='nav-link' to="/signout">Signout</Link> */}
+                            <span 
+                            className='nav-link text-warning' 
+                            onClick={ () => {
+                                signout(() => {
+                                    location("/")
+                                })
+                            }}>
+                                Signout
+                            </span>
+                        </li>   
+                    )
+                }
             </ul>
         </div>   
     )

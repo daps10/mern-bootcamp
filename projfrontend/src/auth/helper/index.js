@@ -57,14 +57,15 @@ export const signout = async (next) => {
                 method: 'GET',
                 headers: { 
                     'Content-Type': 'application/json',
-                    "authorization" : localStorage.getItem("authToken") 
+                    "authorization" : "Bearer " + localStorage.getItem("accessToken") 
                 }
             };
             
             const URL =  API + "auth/signout";
             const response = await fetch (URL, requestOptions);
             await response.json();
-            localStorage.removeItem("authToken");
+            localStorage.removeItem('user');
+            localStorage.removeItem("accessToken");
             next();
         }
     } catch (error) {
@@ -75,18 +76,18 @@ export const signout = async (next) => {
 
 export const authenticate = (data, next) => {
     if(typeof window !== "undefined") {
-        localStorage.setItem("authToken", data.response.accessToken)
+        localStorage.setItem("accessToken", data.response.accessToken)
         next();
     }
 }
 
 export const isAuthenticated = () => {
-    if(typeof window === "undefined") {
+    if(typeof window !== "undefined") {
         return false;
     }
 
-    if(localStorage.getItem("authToken")) {
-        return JSON.parse(localStorage.getItem("authToken"))
+    if(localStorage.getItem("accessToken")) {
+        return localStorage.getItem("accessToken")
     } else {
         return false;
     }
