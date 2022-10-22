@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react'
 import { 
     Link,
-    useNavigate 
+    useLocation,
+    useNavigate
 } from "react-router-dom"
-import { signout, isAuthenticated } from '../auth/helper';
+import { signout, isAuthenticated, getUserData } from '../auth/helper';
 
 export default function Menu({history}) {
-    const location = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const currentTab = (path) =>{
         if(location.pathname === path) {
@@ -24,12 +26,16 @@ export default function Menu({history}) {
                 <li className="nav-item">
                     <Link style={ currentTab( "/cart") } className='nav-link' to="/cart">Cart</Link>
                 </li>
-                <li className="nav-item">
-                    <Link style={ currentTab( "/user/dashboard") } className='nav-link' to="/user/dashboard">Dashboard</Link>
-                </li>
-                <li className="nav-item">
-                    <Link style={ currentTab( "/admin/dashboard") } className='nav-link' to="/admin/dashboard">A.Dashboard</Link>
-                </li>
+                { ( isAuthenticated() !== "undefined") && getUserData().role === 0 && (
+                    <li className="nav-item">
+                        <Link style={ currentTab( "/user/dashboard") } className='nav-link' to="/user/dashboard">Dashboard</Link>
+                    </li>
+                )}
+                {  (isAuthenticated() !== "undefined")&& getUserData().role === 1 && (
+                    <li className="nav-item">
+                        <Link style={ currentTab( "/admin/dashboard") } className='nav-link' to="/admin/dashboard">Dashboard</Link>
+                    </li>
+                )}
                 {
                     ( isAuthenticated() === "undefined") && (
                         <Fragment>
@@ -50,7 +56,7 @@ export default function Menu({history}) {
                             className='nav-link text-warning' 
                             onClick={ () => {
                                 signout(() => {
-                                    location("/")
+                                    navigate("/")
                                 })
                             }}>
                                 Signout
