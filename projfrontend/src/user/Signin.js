@@ -95,17 +95,12 @@ const Signin = () => {
     }
 
     const performRedirect = () => {
-        // TODO redirect to user and admin module.
         if( didRedirect ){
             if( userdata && userdata.role === 1 ) {
-                return <p>Redirect to admin</p>
+                return navigate('/admin/dashboard');
             } else {
-                return <p>Redirect to user</p>
+                return navigate("/user/dashboard");
             }
-        }
-
-        if(userdata.accessToken) {
-            return navigate('/');;
         }
     }
 

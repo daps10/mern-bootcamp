@@ -2,8 +2,6 @@ import React from 'react'
 import "../styles.css"
 // import { API } from "../backend";
 import Base from './Base';
-import { getUserData } from '../auth/helper';
-const _ = require('lodash');
 
 const Home = () => {
     return (
