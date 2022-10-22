@@ -1,10 +1,11 @@
 import React from 'react'
 import "../styles.css"
-import { API } from "../backend";
+// import { API } from "../backend";
 import Base from './Base';
+import { getUserData } from '../auth/helper';
+const _ = require('lodash');
 
 const Home = () => {
-    console.log("API IS ", API)
     return (
         <>
         <Base title='Home Page' description='My description'>

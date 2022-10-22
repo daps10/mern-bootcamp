@@ -1,22 +1,17 @@
 import React from 'react'
-import { Route, Redirect, Navigate } from 'react-router-dom';
-import { isAuthenticated } from '.';
+import { Navigate, useLocation } from 'react-router-dom';
+import { getUserData, isAuthenticated } from '.';
 
 
-const AdminRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ children }) => {
+    const { pathname } = useLocation();
+    let userData = getUserData();
     let auth = isAuthenticated();
-    return (
-        <Route
-            {...rest}
-            render = { 
-                props =>
-                auth && auth.role == 1 ? 
-                (<Component {...props}/>) : 
-                (
-                    <Navigate to="/signin" />
-                )
-            }
-        />
+    
+    return ( auth !== "undefined" && userData.role === 1) ? (
+        children
+    ) : (
+        <Navigate to="/signin" state={{ from: pathname }} replace />
     );
 }
 

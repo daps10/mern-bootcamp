@@ -41,7 +41,7 @@ const Signin = () => {
             password
         });
         if(response.status !== 200){
-            localStorage.setItem('user', {});
+            localStorage.setItem('user', undefined);
             localStorage.setItem('accessToken', undefined);
             setValues({ 
                 ...values, 
@@ -49,7 +49,6 @@ const Signin = () => {
                 loading: false 
             });
         } else {
-            console.log(response.response)
             localStorage.setItem('user', JSON.stringify(response.response));
             localStorage.setItem('accessToken', response.response.accessToken);
 
@@ -96,6 +95,7 @@ const Signin = () => {
     }
 
     const performRedirect = () => {
+        // TODO redirect to user and admin module.
         if( didRedirect ){
             if( userdata && userdata.role === 1 ) {
                 return <p>Redirect to admin</p>

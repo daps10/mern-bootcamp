@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react'
 import { 
     Link,
-    useNavigate 
+    useLocation,
+    useNavigate
 } from "react-router-dom"
 import { signout, isAuthenticated } from '../auth/helper';
 
 export default function Menu({history}) {
-    const location = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const currentTab = (path) =>{
         if(location.pathname === path) {
@@ -50,7 +52,7 @@ export default function Menu({history}) {
                             className='nav-link text-warning' 
                             onClick={ () => {
                                 signout(() => {
-                                    location("/")
+                                    navigate("/")
                                 })
                             }}>
                                 Signout
