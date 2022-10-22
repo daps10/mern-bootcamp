@@ -6,8 +6,7 @@ import Base from '../core/Base';
 const AdminDashboard = ( ) => {
     const { 
         name, 
-        email, 
-        role 
+        email
     } = getUserData();
 
     // Admin left side
@@ -35,7 +34,28 @@ const AdminDashboard = ( ) => {
 
     // Admin right side
     const adminRightSide = () => {
-        
+        return (
+            <div className='card mb-4'>
+                <h4 className="card-header">
+                    Admin Information
+                </h4>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <span className="badge bg-success mr-2">
+                            Name: 
+                        </span> { name }
+                    </li>
+                    <li className="list-group-item">
+                        <span className="badge bg-success mr-2">
+                            Email: 
+                        </span> { email }
+                    </li>
+                    <li className="list-group-item">
+                        <span className="badge bg-danger">Admin Area</span>
+                    </li>
+                </ul>
+            </div>
+        )
     }
 
     return (
