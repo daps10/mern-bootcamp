@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { isAuthenticated } from '../auth/helper';
 import Base from '../core/Base';
 import { createCategory } from './helper/adminapicall';
 
@@ -9,8 +8,6 @@ const AddCategory = () => {
     const [name, setName] = useState("");
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
-
-    const accessToken = isAuthenticated();
 
     // Go back
     const goBack = () => (
@@ -31,7 +28,7 @@ const AddCategory = () => {
         setSuccess(false);
 
         // backend API call
-        const response = await createCategory(accessToken, name);
+        const response = await createCategory(name);
         if(response.status !== 200){
             setError(true);
             setSuccess(false);

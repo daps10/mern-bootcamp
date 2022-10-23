@@ -34,12 +34,6 @@ const Routes = () => {
                         <AdminDashBoard/>
                     </AdminRoute>
                 }/>
-                {/* <Route path="/admin/create/category" element={
-                    <AdminRoute>
-                        <AddCategory/>      
-                    </AdminRoute>
-                }/> */}
-
 
                 <Route path="/admin/create/category" element={
                     <AdminRoute>
@@ -52,22 +46,7 @@ const Routes = () => {
                         <AddCategory/>      
                     </AdminRoute>
                 }/>
-
-                
-
-                {/* <Route path="/*" element={<AdminRoute />}>
-                    <Route path="/admin/dashboard" element={<AdminDashBoard/>} />
-                    <Route path="/admin/create/category" element={<AddCategory/>} />
-                </Route> */}
-
             </Router>
-            
-            {/* <Router>
-                <Route exact path="/user/dashboard" element={<UserDashBoard/>} />
-            </Router>
-            <Router>
-                <Route exact path="/admin/dashboard" element={<AdminDashBoard/>} />
-            </Router> */}
         </BrowserRouter>
     )
 }

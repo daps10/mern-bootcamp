@@ -1,8 +1,11 @@
+import { isAuthenticated } from "../../auth/helper";
 import { API } from "../../backend";
 
+
 // Create category
-export const createCategory = async ( token, categoryName ) => {
+export const createCategory = async ( categoryName ) => {
     try {
+        const token = isAuthenticated();
         const categoryParams = {
             "name": categoryName
         };
@@ -25,4 +28,52 @@ export const createCategory = async ( token, categoryName ) => {
         console.log(error);
     }
 }
+
+// Get all categories
+export const getAllCategories = async() => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            }
+        };
+
+        const URL =  API + "category/";
+            
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+// create product
+export const createProduct = async ( productParams ) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            },
+            body: productParams
+        };
+
+        const URL =  API + "product/create";
+            
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
