@@ -141,3 +141,24 @@ export const updateProduct = async ( productId,productParams ) => {
     }
 }
 
+// Delete Product
+export const deleteProduct = async ( productId ) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            }
+        };
+
+        const URL =  API + "product/" + productId;
+            
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
