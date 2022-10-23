@@ -1,5 +1,6 @@
 import { API } from "../../backend";
 
+// Create category
 export const createCategory = async ( token, categoryName ) => {
     try {
         const categoryParams = {
@@ -24,3 +25,4 @@ export const createCategory = async ( token, categoryName ) => {
         console.log(error);
     }
 }
+
