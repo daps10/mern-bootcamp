@@ -13,6 +13,7 @@ import PrivateRoute from './auth/helper/PrivateRoutes';
 import AdminRoute from './auth/helper/AdminRoutes';
 import AddCategory from './admin/AddCategory';
 import ManageCategories from './admin/ManageCategories';
+import AddProduct from './admin/AddProduct';
 
 
 const Routes = () => {
@@ -47,6 +48,13 @@ const Routes = () => {
                         <ManageCategories/>      
                     </AdminRoute>
                 }/>
+
+                <Route path="/admin/create/product" element={
+                    <AdminRoute>
+                        <AddProduct/>      
+                    </AdminRoute>
+                }/>
+
             </Router>
         </BrowserRouter>
     )

@@ -43,7 +43,6 @@ export const getAllCategories = async() => {
         };
 
         const URL =  API + "category/";
-            
         const response = await fetch (URL, requestOptions);
         return await response.json();
     } catch (error) {
