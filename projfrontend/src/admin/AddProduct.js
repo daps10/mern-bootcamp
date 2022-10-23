@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Base from '../core/Base';
-import { getAllCategories } from './helper/adminapicall';
+import { 
+    getAllCategories, 
+    createProduct
+} from './helper/adminapicall';
+
 const AddProduct = () => {
     // call useEffect
     useEffect(async () => {
@@ -55,9 +59,46 @@ const AddProduct = () => {
         }
     }
 
-    const onSubmit = () => {
-        //
+    const onSubmit = async ( event ) => {
+        event.preventDefault();
+
+        setValues({ 
+            ...values, 
+            error: "", 
+            loading: true 
+        });
+        
+        // backend API call
+        const response = await createProduct( formData );
+        if(response.status !== 200){
+            setValues({
+                ...values,
+                error: response.message,
+                loading: false
+            });
+        } else {
+            setValues({
+                ...values,
+                name: "",
+                description: "",
+                price: "",
+                photo: "",
+                stock: "",
+                loading: false,
+                createdProduct: response.response.name,
+            })
+        }
     };
+
+    // success message handler
+    const successMessage = () => {
+
+    }
+
+    // error message handler
+    const errorMessage = () => {
+        
+    }
 
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.file[0] : event.target.value;
