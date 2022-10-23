@@ -67,7 +67,7 @@ const AddProduct = () => {
             error: "", 
             loading: true 
         });
-        
+        console.log("Form data :: ", formData);
         // backend API call
         const response = await createProduct( formData );
         if(response.status !== 200){
@@ -91,14 +91,25 @@ const AddProduct = () => {
     };
 
     // success message handler
-    const successMessage = () => {
+    const successMessage = () => (
+        <div 
+            className="alert alert-success mt-3"
+            style={{ display: createdProduct ? "" : "none" }}
+        >
+            <h4> { createProduct } has been successfully! </h4>
 
-    }
+        </div>
+    )
 
     // error message handler
-    const errorMessage = () => {
-        
-    }
+    const errorMessage = () => (
+        <div 
+            className="alert alert-danger mt-3"
+            style={{ display: error ? "" : "none" }}
+        >
+            <h4> category has not been successfully! </h4>
+        </div>
+    )
 
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.file[0] : event.target.value;
@@ -190,7 +201,13 @@ const AddProduct = () => {
             >  Admin Home </Link>
 
             <div className="row bg-dark text-white rounded">
-                <div className="col-md-8 offset-md-2">{createProductForm()}</div>
+
+                <div 
+                    className="col-md-8 offset-md-2">
+                        { successMessage() }
+                        { errorMessage() }
+                        {createProductForm()}
+                </div>
             </div>
         </Base>
     )
