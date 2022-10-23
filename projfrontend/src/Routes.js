@@ -12,6 +12,7 @@ import AdminDashBoard from './user/AdminDashBoard';
 import PrivateRoute from './auth/helper/PrivateRoutes';
 import AdminRoute from './auth/helper/AdminRoutes';
 import AddCategory from './admin/AddCategory';
+import ManageCategories from './admin/ManageCategories';
 
 
 const Routes = () => {
@@ -41,9 +42,9 @@ const Routes = () => {
                     </AdminRoute>
                 }/>
 
-                <Route path="/admin/create/category" element={
+                <Route path="/admin/categories" element={
                     <AdminRoute>
-                        <AddCategory/>      
+                        <ManageCategories/>      
                     </AdminRoute>
                 }/>
             </Router>
