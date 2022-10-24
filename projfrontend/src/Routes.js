@@ -11,6 +11,10 @@ import UserDashBoard from './user/UserDashBoard';
 import AdminDashBoard from './user/AdminDashBoard';
 import PrivateRoute from './auth/helper/PrivateRoutes';
 import AdminRoute from './auth/helper/AdminRoutes';
+import AddCategory from './admin/AddCategory';
+import ManageCategories from './admin/ManageCategories';
+import AddProduct from './admin/AddProduct';
+
 
 const Routes = () => {
     return (
@@ -26,19 +30,32 @@ const Routes = () => {
                     </PrivateRoute>
                 }/>
                 
+                
                 <Route path="/admin/dashboard" element={
                     <AdminRoute>
                         <AdminDashBoard/>
                     </AdminRoute>
                 }/>
+
+                <Route path="/admin/create/category" element={
+                    <AdminRoute>
+                        <AddCategory/>      
+                    </AdminRoute>
+                }/>
+
+                <Route path="/admin/categories" element={
+                    <AdminRoute>
+                        <ManageCategories/>      
+                    </AdminRoute>
+                }/>
+
+                <Route path="/admin/create/product" element={
+                    <AdminRoute>
+                        <AddProduct/>      
+                    </AdminRoute>
+                }/>
+
             </Router>
-            
-            {/* <Router>
-                <Route exact path="/user/dashboard" element={<UserDashBoard/>} />
-            </Router>
-            <Router>
-                <Route exact path="/admin/dashboard" element={<AdminDashBoard/>} />
-            </Router> */}
         </BrowserRouter>
     )
 }
