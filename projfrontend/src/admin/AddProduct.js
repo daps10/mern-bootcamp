@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Base from '../core/Base';
 import { 
     getAllCategories, 
@@ -7,9 +7,11 @@ import {
 } from './helper/adminapicall';
 
 const AddProduct = () => {
+    let navigate = useNavigate();
     // call useEffect
-    useEffect(async () => {
-        await preload();
+    useEffect(() => {
+        preload();
+        // eslint-disable-next-line
     }, [])
     
     const [values, setValues] = useState({
@@ -23,7 +25,7 @@ const AddProduct = () => {
         loading: false,
         error:"",
         createdProduct:"",
-        getRedirect: false,
+        didRedirect: false,
         formData:""
     });
 
@@ -32,13 +34,13 @@ const AddProduct = () => {
         description, 
         price, 
         stock, 
-        photo, 
+        // photo, 
         categories, 
-        category, 
+        // category, 
         loading, 
         error, 
         createdProduct, 
-        getRedirect, 
+        didRedirect, 
         formData 
     } = values;
 
@@ -65,7 +67,8 @@ const AddProduct = () => {
         setValues({ 
             ...values, 
             error: "", 
-            loading: true 
+            loading: true,
+            didRedirect: false
         });
         // backend API call
         const response = await createProduct( formData );
@@ -73,7 +76,8 @@ const AddProduct = () => {
             setValues({
                 ...values,
                 error: response.message,
-                loading: false
+                loading: false,
+                didRedirect: false
             });
         } else {
             setValues({
@@ -84,10 +88,23 @@ const AddProduct = () => {
                 photo: "",
                 stock: "",
                 loading: false,
+                didRedirect: true,
                 createdProduct: response.response.name,
             })
         }
     };
+
+    const loadingMessage = () => {
+        return (
+            loading && (
+                <div 
+                    className="alert alert-info mt-3"
+                >
+                    <h4> Loading... </h4>
+                </div>
+            )
+        );
+    }
 
     // success message handler
     const successMessage = () => (
@@ -96,9 +113,16 @@ const AddProduct = () => {
             style={{ display: createdProduct ? "" : "none" }}
         >
             <h4> { createdProduct } product has been successfully! </h4>
-
         </div>
     )
+
+    const performRedirect = () => {
+        if( didRedirect ){
+            setTimeout(() => {
+                return navigate('/');
+            }, 3000);
+        }
+    }
 
     // error message handler
     const errorMessage = () => (
@@ -204,9 +228,11 @@ const AddProduct = () => {
 
                 <div 
                     className="col-md-8 offset-md-2">
+                        { loadingMessage() }
                         { successMessage() }
                         { errorMessage() }
-                        {createProductForm()}
+                        { performRedirect() }
+                        { createProductForm() }
                 </div>
             </div>
         </Base>
