@@ -3,7 +3,6 @@ const httpStatus = require('http-status');
 const user = require('../../models/user.model');
 const _ = require('lodash');
 exports.checkAuthorization = async(req, res, next) => {
-    console.log("coming here")
     let token = req.headers["authorization"];
     try {
         if (!token) {

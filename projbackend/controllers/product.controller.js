@@ -91,7 +91,6 @@ exports.getAllProduct = async (req, res) => {
 // Product created
 exports.createProduct = async (req, res) => {
     try {
-        console.log(req.body);return false;
         const productData = await productService.createProduct(req.body);
         if(!productData) {
             return res.status(httpStatus.BAD_REQUEST).json({
