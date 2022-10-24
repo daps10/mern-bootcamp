@@ -8,13 +8,13 @@ const config = require('../../config/config');
 const fileUpload = async(req, res, next) => {
     try {
         const form = await formidable.IncomingForm();
-
         // Upload folder
         const uploadFolder = path.join(__dirname, "../../public/files/");
         form.uploadDir = uploadFolder;
 
         // parsed form
         form.parse(req, async (err, fields, files) => {
+            console.log("fields are :: ", fields);return false;
             if (err) {
                 return res.status(httpStatus.BAD_REQUEST).json({
                     status: httpStatus.BAD_REQUEST,
