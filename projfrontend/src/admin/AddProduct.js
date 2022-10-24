@@ -67,7 +67,7 @@ const AddProduct = () => {
             error: "", 
             loading: true 
         });
-        console.log("Form data :: ", formData);
+        console.log("Form data :: ", formData); return false;
         // backend API call
         const response = await createProduct( formData );
         if(response.status !== 200){
@@ -112,7 +112,8 @@ const AddProduct = () => {
     )
 
     const handleChange = name => event => {
-        const value = name === "photo" ? event.target.file[0] : event.target.value;
+        const value = name === "photo" ? event.target.files[0] : event.target.value;
+        // console.log("value data :: ", value)
         formData.set(name, value);
         setValues({
             ...values,
@@ -175,10 +176,10 @@ const AddProduct = () => {
             </div>
             <div className="form-group">
                 <input
-                    onChange={handleChange("quantity")}
+                    onChange={handleChange("stock")}
                     type="number"
                     className="form-control my-3"
-                    placeholder="Quantity"
+                    placeholder="Stock"
                     value={stock}
                 />
             </div>
