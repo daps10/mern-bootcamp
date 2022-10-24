@@ -99,24 +99,15 @@ export const createProduct = async ( productParams ) => {
     try {
         const token = isAuthenticated();
         // Simple POST request with a JSON body using fetch
-        var formdata = new FormData();
-        formdata.append("name", "this is product");
-        formdata.append("description", "this is product description");
-        formdata.append("price", "100");
-        formdata.append("stock", "1000");
-        formdata.append("category", "6349bebae6d20f142048eeb6");
         const requestOptions = {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
                 "authorization" : "Bearer " + token
             },
-            body: formdata
+            body: productParams
         };
-
         const URL =  API + "product/create";
         const response = await fetch (URL, requestOptions);
-        console.log(...productParams);return false;    
         return await response.json();
     } catch (error) {
         console.log(error);

@@ -40,31 +40,25 @@ const AddCategory = () => {
     }
 
     // success message after completion of request
-    const successMessage = () => {
-        if(success){
-            return <div className="row">
-                <div className="col-md-8">
-                    <div className="alert alert-success" >
-                        Product has been created successfully!
-                    </div>
-                </div>
-            </div>
-        }
-    }
+    const successMessage = () => (
+        <div 
+            className="alert alert-success mt-3"
+            style={{ display: success ? "" : "none" }}
+        >
+            <h4> Category has been successfully! </h4>
+
+        </div>
+    )
 
     // error message after completion of request
-    const errorMessage = () => {
-        if(error){
-
-            return <div className="row">
-                <div className="col-md-8">
-                    <div className="alert alert-danger" >
-                        Failed to create category!
-                    </div>
-                </div>
-            </div>
-        }
-    }
+    const errorMessage = () => (
+        <div 
+            className="alert alert-danger mt-3"
+            style={{ display: error ? "" : "none" }}
+        >
+            <h4> Failed to create category! </h4>
+        </div>
+    )
 
     const myCategoryForm = () => (
         <form>

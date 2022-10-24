@@ -67,7 +67,6 @@ const AddProduct = () => {
             error: "", 
             loading: true 
         });
-        console.log("Form data :: ", formData); return false;
         // backend API call
         const response = await createProduct( formData );
         if(response.status !== 200){
@@ -96,7 +95,7 @@ const AddProduct = () => {
             className="alert alert-success mt-3"
             style={{ display: createdProduct ? "" : "none" }}
         >
-            <h4> { createProduct } has been successfully! </h4>
+            <h4> { createdProduct } product has been successfully! </h4>
 
         </div>
     )

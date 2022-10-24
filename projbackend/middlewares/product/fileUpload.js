@@ -14,7 +14,6 @@ const fileUpload = async(req, res, next) => {
 
         // parsed form
         form.parse(req, async (err, fields, files) => {
-            console.log("fields are :: ", fields);return false;
             if (err) {
                 return res.status(httpStatus.BAD_REQUEST).json({
                     status: httpStatus.BAD_REQUEST,
