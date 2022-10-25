@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Base from '../core/Base';
+import { getAllProducts } from './helper/adminapicall';
 
 const ManageProducts = () => {
+    // run the preload function to fetch all the products
+    useEffect(() => {
+      preload();
+    }, []);
+
+    const [products, setProducts] = useState([]);
+    
+    // Fetch all products
+    const preload = async () => {
+        const response = await getAllProducts();
+        if(response.status === 200){
+            setProducts(response.response);
+        } else {
+            console.log("error data :: ", response.message);
+        }    
+    }
+
+    
+
     return (
         <Base title="Welcome admin" description="Manage products here">
             <h2 className="mb-4">All products:</h2>
@@ -13,24 +33,29 @@ const ManageProducts = () => {
                 <div className="col-12">
                     <h2 className="text-center text-white my-3">Total 3 products</h2>
 
-                    <div className="row text-center mb-2 ">
-                        <div className="col-4">
-                            <h3 className="text-white text-left">I write code</h3>
-                        </div>
-                        <div className="col-4">
-                            <Link
-                                className="btn btn-success"
-                                to={`/admin/product/update/productId`}
-                            >
-                                <span className="">Update</span>
-                            </Link>
-                        </div>
-                        <div className="col-4">
-                            <button onClick={() => {}} className="btn btn-danger">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
+                    { products.map((res, index) => {
+                        return  (
+                            <div key={ index } className="row text-center mb-2 ">
+                                <div className="col-4">
+                                    <h3 className="text-white text-left">{ res.name }</h3>
+                                </div>
+                                <div className="col-4">
+                                    <Link
+                                        className="btn btn-success"
+                                        to={`/admin/product/update/productId`}
+                                    >
+                                        <span className="">Update</span>
+                                    </Link>
+                                </div>
+                                <div className="col-4">
+                                    <button onClick={() => {}} className="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    }) }
+
                 </div>
             </div>
         </Base>
