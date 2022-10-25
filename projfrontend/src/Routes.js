@@ -14,6 +14,7 @@ import AdminRoute from './auth/helper/AdminRoutes';
 import AddCategory from './admin/AddCategory';
 import ManageCategories from './admin/ManageCategories';
 import AddProduct from './admin/AddProduct';
+import ManageProducts from './admin/ManageProducts';
 
 
 const Routes = () => {
@@ -52,6 +53,12 @@ const Routes = () => {
                 <Route path="/admin/create/product" element={
                     <AdminRoute>
                         <AddProduct/>      
+                    </AdminRoute>
+                }/>
+
+                <Route path="/admin/products" element={
+                    <AdminRoute>
+                        <ManageProducts/>     
                     </AdminRoute>
                 }/>
 
