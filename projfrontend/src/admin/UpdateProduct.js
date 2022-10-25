@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import Base from '../core/Base';
 import { 
     getAllCategories, 
@@ -7,11 +7,13 @@ import {
     updateProduct
 } from './helper/adminapicall';
 
-const UpdateProduct = () => {
+const UpdateProduct = (props) => {
+    const { productId } = useParams();
+    
     let navigate = useNavigate();
     // call useEffect
     useEffect(() => {
-        preload();
+        preload(productId);
         // eslint-disable-next-line
     }, [])
     
