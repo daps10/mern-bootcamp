@@ -149,9 +149,8 @@ export const deleteProduct = async ( productId ) => {
                 "authorization" : "Bearer " + token
             }
         };
-
+        
         const URL =  API + "product/" + productId;
-            
         const response = await fetch (URL, requestOptions);
         return await response.json();
     } catch (error) {
