@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Base from '../core/Base';
-import { getAllProducts } from './helper/adminapicall';
+import { getAllProducts,deleteProduct } from './helper/adminapicall';
 
 const ManageProducts = () => {
     // run the preload function to fetch all the products
@@ -21,6 +21,15 @@ const ManageProducts = () => {
         }    
     }
 
+    // delete products
+    const deleteThisProduct = async ( id ) => {
+        const response = await deleteProduct(id);
+        if(response.status === 200){
+            preload();
+        } else {
+            console.log("error data :: ", response.message);
+        }
+    }
     
 
     return (
@@ -48,7 +57,9 @@ const ManageProducts = () => {
                                     </Link>
                                 </div>
                                 <div className="col-4">
-                                    <button onClick={() => {}} className="btn btn-danger">
+                                    <button onClick={() => {  
+                                        deleteThisProduct(res._id);
+                                    }} className="btn btn-danger">
                                         Delete
                                     </button>
                                 </div>
