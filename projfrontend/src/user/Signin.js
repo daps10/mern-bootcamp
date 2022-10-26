@@ -19,6 +19,7 @@ const Signin = () => {
 
     const { email, password, error, loading, didRedirect } = values; // desctructre the values
 
+    // handle onchange form data
     const onHandleChange = name => event => {
         setValues({
             ...values,
@@ -27,6 +28,7 @@ const Signin = () => {
         })
     }
 
+    // on submit form data
     const onSubmit = async (event) => {
         event.preventDefault();
 
@@ -64,6 +66,7 @@ const Signin = () => {
         }
     }
 
+    // perform signin event
     const signINForm = () => {
         return (
             <div className="row">
@@ -94,6 +97,7 @@ const Signin = () => {
         )
     }
 
+    // perform redirection after logged in
     const performRedirect = () => {
         if( didRedirect ){
             if( userdata && userdata.role === 1 ) {
@@ -104,6 +108,7 @@ const Signin = () => {
         }
     }
 
+    // loading message
     const loadingMessage = () => {
         return (
             loading && (
@@ -114,6 +119,7 @@ const Signin = () => {
         );
     }
 
+    // error message once got error
     const errorMessage = () => {
         return (
             <div className="row">

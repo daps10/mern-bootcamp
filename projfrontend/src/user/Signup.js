@@ -24,6 +24,7 @@ const Signup = () => {
         })
     }
 
+    // handle submit event
     const onSubmit = async (event) => {
         event.preventDefault();
         setValues({ ...values, error: false })
@@ -56,6 +57,7 @@ const Signup = () => {
         }
     }
 
+    // success message once get response
     const successMessage = () => {
         return (
             <div className="row">
@@ -68,6 +70,7 @@ const Signup = () => {
         )
     }
 
+    // error message popped up
     const errorMessage = () => {
         return (
             <div className="row">
@@ -80,6 +83,7 @@ const Signup = () => {
         )
     }
 
+    // handling the signup form
     const signUpForm = () => {
         return (
             <div className="row">

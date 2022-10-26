@@ -11,7 +11,7 @@ const UpdateProduct = (props) => {
     const { productId } = useParams();
     
     let navigate = useNavigate();
-    // call useEffect
+    // call useEffect for fetch the product first
     useEffect(() => {
         preload(productId);
         // eslint-disable-next-line
@@ -47,7 +47,7 @@ const UpdateProduct = (props) => {
         formData 
     } = values;
 
-    // preload the categories
+    // preload the get product
     const preload = async (productId) => {
         const response = await getProduct(productId);
         if(response.status === 200){
@@ -77,7 +77,7 @@ const UpdateProduct = (props) => {
             loading: true,
             didRedirect: false
         });
-        // backend API call
+        // Call the update product API
         const response = await updateProduct( formData );
         if(response.status !== 200){
             setValues({
@@ -101,6 +101,7 @@ const UpdateProduct = (props) => {
         }
     };
 
+    // loading message appear while the page load
     const loadingMessage = () => {
         return (
             loading && (
@@ -123,6 +124,7 @@ const UpdateProduct = (props) => {
         </div>
     )
 
+    // Perform redirect once the response got.
     const performRedirect = () => {
         if( didRedirect ){
             setTimeout(() => {
@@ -141,6 +143,7 @@ const UpdateProduct = (props) => {
         </div>
     )
 
+    // Handle once change
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value;
         // console.log("value data :: ", value)
@@ -151,8 +154,8 @@ const UpdateProduct = (props) => {
         })
     };
 
-    // create product form
-    const createProductForm = () => (
+    // Update product form
+    const updateProductForm = () => (
         <form>
             <span>Post photo</span>
             <input
@@ -239,7 +242,7 @@ const UpdateProduct = (props) => {
                         { successMessage() }
                         { errorMessage() }
                         { performRedirect() }
-                        { createProductForm() }
+                        { updateProductForm() }
                 </div>
             </div>
         </Base>

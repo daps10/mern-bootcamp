@@ -21,7 +21,7 @@ const ManageProducts = () => {
         }    
     }
 
-    // delete products
+    // delete product by id
     const deleteThisProduct = async ( id ) => {
         const response = await deleteProduct(id);
         if(response.status === 200){
