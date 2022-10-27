@@ -51,6 +51,7 @@ const UpdateProduct = (props) => {
     const preload = async (productId) => {
         const response = await getProduct(productId);
         if(response.status === 200){
+            preloadCategories();
             setValues({ 
                 ...values,
                 name: response.response.name,
@@ -58,6 +59,21 @@ const UpdateProduct = (props) => {
                 price: response.response.price,
                 category: response.response.category,
                 stock: response.response.stock,
+                formData: new FormData()
+            });
+        } else {
+            setValues({ 
+                ...values, 
+                error: response.message
+            });
+        }
+    }
+
+    const preloadCategories = async () => {
+        const response = await getAllCategories();
+        if(response.status === 200){
+            setValues({ 
+                categories: response.response, 
                 formData: new FormData()
             });
         } else {
