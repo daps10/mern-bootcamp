@@ -210,6 +210,7 @@ const UpdateProduct = (props) => {
             </div>
             <div className="form-group">
                 <select
+                    value={category}
                     onChange={handleChange("category")}
                     className="form-control my-3"
                     placeholder="Category"
