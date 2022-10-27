@@ -39,7 +39,7 @@ const UpdateProduct = (props) => {
         stock, 
         // photo, 
         categories, 
-        // category, 
+        category, 
         loading, 
         error, 
         createdProduct, 
