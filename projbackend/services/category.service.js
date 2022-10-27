@@ -5,7 +5,6 @@ const findAllCategories = async () => {
     const response= [];
     for (let category of categories) {
         category = await category.transform();
-        console.log(category)
         response.push(category)
     }
 

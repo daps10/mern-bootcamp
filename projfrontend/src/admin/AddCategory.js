@@ -16,11 +16,13 @@ const AddCategory = () => {
         </div>
     )
 
+    // handle change event
     const handleChange = (event) => {
         setError("");
         setName(event.target.value);
     }
 
+    // on submit form data
     const onSubmit = async (event) => {
         event.preventDefault();
 
@@ -60,6 +62,7 @@ const AddCategory = () => {
         </div>
     )
 
+    // Add category form
     const myCategoryForm = () => (
         <form>
             <div className="form-group">

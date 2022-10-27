@@ -8,7 +8,7 @@ import {
 
 const AddProduct = () => {
     let navigate = useNavigate();
-    // call useEffect
+    // call useEffect to get all categories
     useEffect(() => {
         preload();
         // eslint-disable-next-line
@@ -61,6 +61,7 @@ const AddProduct = () => {
         }
     }
 
+    // on submit event
     const onSubmit = async ( event ) => {
         event.preventDefault();
 
@@ -94,6 +95,7 @@ const AddProduct = () => {
         }
     };
 
+    // loading page
     const loadingMessage = () => {
         return (
             loading && (
@@ -116,6 +118,7 @@ const AddProduct = () => {
         </div>
     )
 
+    // performe redirect once product created
     const performRedirect = () => {
         if( didRedirect ){
             setTimeout(() => {
@@ -130,10 +133,11 @@ const AddProduct = () => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4> category has not been successfully! </h4>
+            <h4> product has not been successfully! </h4>
         </div>
     )
 
+    // handle on change
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value;
         // console.log("value data :: ", value)

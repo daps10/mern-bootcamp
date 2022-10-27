@@ -122,14 +122,12 @@ export const updateProduct = async ( productId,productParams ) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 
-                'Content-Type': 'application/json',
                 "authorization" : "Bearer " + token
             },
             body: productParams
         };
 
         const URL =  API + "product/update/" + productId;
-            
         const response = await fetch (URL, requestOptions);
         return await response.json();
     } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Base from '../core/Base';
 import { 
     getAllCategories, 
@@ -11,12 +11,14 @@ const UpdateProduct = (props) => {
     const { productId } = useParams();
     
     let navigate = useNavigate();
-    // call useEffect
+    // call useEffect for fetch the product first
     useEffect(() => {
         preload(productId);
         // eslint-disable-next-line
     }, [])
     
+    const [selectedCategory, setCategory] = useState(null);
+
     const [values, setValues] = useState({
         name: "",
         description: "",
@@ -24,7 +26,6 @@ const UpdateProduct = (props) => {
         stock: "",
         photo: "",
         categories:[],
-        category:"",
         loading: false,
         error:"",
         createdProduct:"",
@@ -39,7 +40,6 @@ const UpdateProduct = (props) => {
         stock, 
         // photo, 
         categories, 
-        // category, 
         loading, 
         error, 
         createdProduct, 
@@ -47,10 +47,10 @@ const UpdateProduct = (props) => {
         formData 
     } = values;
 
-    // preload the categories
+    // preload the get product
     const preload = async (productId) => {
         const response = await getProduct(productId);
-        if(response.status === 200){
+        if(response.status === 200){ 
             setValues({ 
                 ...values,
                 name: response.response.name,
@@ -58,6 +58,23 @@ const UpdateProduct = (props) => {
                 price: response.response.price,
                 category: response.response.category,
                 stock: response.response.stock,
+                formData: new FormData()
+            });
+            setCategory(response.response.category);
+            preloadCategories();
+        } else {
+            setValues({ 
+                ...values, 
+                error: response.message
+            });
+        }
+    }
+
+    const preloadCategories = async () => {
+        const response = await getAllCategories();
+        if(response.status === 200){
+            setValues({ 
+                categories: response.response, 
                 formData: new FormData()
             });
         } else {
@@ -77,8 +94,8 @@ const UpdateProduct = (props) => {
             loading: true,
             didRedirect: false
         });
-        // backend API call
-        const response = await updateProduct( formData );
+        // Call the update product API
+        const response = await updateProduct( productId, formData );
         if(response.status !== 200){
             setValues({
                 ...values,
@@ -89,11 +106,11 @@ const UpdateProduct = (props) => {
         } else {
             setValues({
                 ...values,
-                name: "",
-                description: "",
-                price: "",
-                photo: "",
-                stock: "",
+                name: response.response.name,
+                description: response.response.description,
+                price: response.response.price,
+                photo: response.response.photo,
+                stock: response.response.stock,
                 loading: false,
                 didRedirect: true,
                 createdProduct: response.response.name,
@@ -101,6 +118,7 @@ const UpdateProduct = (props) => {
         }
     };
 
+    // loading message appear while the page load
     const loadingMessage = () => {
         return (
             loading && (
@@ -123,10 +141,11 @@ const UpdateProduct = (props) => {
         </div>
     )
 
+    // Perform redirect once the response got.
     const performRedirect = () => {
         if( didRedirect ){
             setTimeout(() => {
-                return navigate('/');
+                return navigate('/admin/products');
             }, 3000);
         }
     }
@@ -137,13 +156,14 @@ const UpdateProduct = (props) => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4> category has not been successfully! </h4>
+            <h4> product has not been successfully! </h4>
         </div>
     )
 
+    // Handle once change
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value;
-        // console.log("value data :: ", value)
+        
         formData.set(name, value);
         setValues({
             ...values,
@@ -151,8 +171,8 @@ const UpdateProduct = (props) => {
         })
     };
 
-    // create product form
-    const createProductForm = () => (
+    // Update product form
+    const updateProductForm = () => (
         <form>
             <span>Post photo</span>
             <input
@@ -189,8 +209,10 @@ const UpdateProduct = (props) => {
                     value={price}
                 />
             </div>
+            
             <div className="form-group">
                 <select
+                    value={selectedCategory}
                     onChange={handleChange("category")}
                     className="form-control my-3"
                     placeholder="Category"
@@ -219,7 +241,7 @@ const UpdateProduct = (props) => {
                 onClick={onSubmit}
                 className="btn btn-outline-success mb-3"
             >
-                Create Product
+                Update Product
             </button>
         </form>
     );
@@ -239,7 +261,7 @@ const UpdateProduct = (props) => {
                         { successMessage() }
                         { errorMessage() }
                         { performRedirect() }
-                        { createProductForm() }
+                        { updateProductForm() }
                 </div>
             </div>
         </Base>
