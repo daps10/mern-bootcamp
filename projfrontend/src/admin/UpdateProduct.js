@@ -26,7 +26,6 @@ const UpdateProduct = (props) => {
         stock: "",
         photo: "",
         categories:[],
-        category:"",
         loading: false,
         error:"",
         createdProduct:"",
@@ -41,7 +40,6 @@ const UpdateProduct = (props) => {
         stock, 
         // photo, 
         categories, 
-        category, 
         loading, 
         error, 
         createdProduct, 
@@ -211,7 +209,7 @@ const UpdateProduct = (props) => {
                     value={price}
                 />
             </div>
-            {console.log(category)}
+            
             <div className="form-group">
                 <select
                     value={selectedCategory}
