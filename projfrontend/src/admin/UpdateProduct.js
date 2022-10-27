@@ -145,7 +145,7 @@ const UpdateProduct = (props) => {
     const performRedirect = () => {
         if( didRedirect ){
             setTimeout(() => {
-                return navigate('/');
+                return navigate('/admin/products');
             }, 3000);
         }
     }
