@@ -53,7 +53,7 @@ const fileUpload = async(req, res, next) => {
                 req.body.photo = {};
                 req.body.photo.data = fs.readFileSync(path.join(uploadFolder, fileName));
                 req.body.photo.contentType = file.type;
-    
+                console.log("req bodyd da", req.body)
                 next();
             }
             

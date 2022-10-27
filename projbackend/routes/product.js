@@ -58,7 +58,7 @@ router.put(
     checkAuthorization,
     isAdmin,
     fileUpload,
-    productValidation.updateProduct,
+    // productValidation.updateProduct,
     validate,
     updateProduct
 );

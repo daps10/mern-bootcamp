@@ -133,7 +133,7 @@ const AddProduct = () => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4> category has not been successfully! </h4>
+            <h4> product has not been successfully! </h4>
         </div>
     )
 

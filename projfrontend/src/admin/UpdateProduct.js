@@ -17,6 +17,8 @@ const UpdateProduct = (props) => {
         // eslint-disable-next-line
     }, [])
     
+    const [selectedCategory, setCategory] = useState(null);
+
     const [values, setValues] = useState({
         name: "",
         description: "",
@@ -50,8 +52,7 @@ const UpdateProduct = (props) => {
     // preload the get product
     const preload = async (productId) => {
         const response = await getProduct(productId);
-        if(response.status === 200){
-            preloadCategories();
+        if(response.status === 200){ 
             setValues({ 
                 ...values,
                 name: response.response.name,
@@ -61,6 +62,8 @@ const UpdateProduct = (props) => {
                 stock: response.response.stock,
                 formData: new FormData()
             });
+            setCategory(response.response.category);
+            preloadCategories();
         } else {
             setValues({ 
                 ...values, 
@@ -94,7 +97,7 @@ const UpdateProduct = (props) => {
             didRedirect: false
         });
         // Call the update product API
-        const response = await updateProduct( formData );
+        const response = await updateProduct( productId, formData );
         if(response.status !== 200){
             setValues({
                 ...values,
@@ -105,11 +108,11 @@ const UpdateProduct = (props) => {
         } else {
             setValues({
                 ...values,
-                name: "",
-                description: "",
-                price: "",
-                photo: "",
-                stock: "",
+                name: response.response.name,
+                description: response.response.description,
+                price: response.response.price,
+                photo: response.response.photo,
+                stock: response.response.stock,
                 loading: false,
                 didRedirect: true,
                 createdProduct: response.response.name,
@@ -155,14 +158,14 @@ const UpdateProduct = (props) => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4> category has not been successfully! </h4>
+            <h4> product has not been successfully! </h4>
         </div>
     )
 
     // Handle once change
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value;
-        // console.log("value data :: ", value)
+        
         formData.set(name, value);
         setValues({
             ...values,
@@ -208,9 +211,10 @@ const UpdateProduct = (props) => {
                     value={price}
                 />
             </div>
+            {console.log(category)}
             <div className="form-group">
                 <select
-                    value={category}
+                    value={selectedCategory}
                     onChange={handleChange("category")}
                     className="form-control my-3"
                     placeholder="Category"
@@ -239,7 +243,7 @@ const UpdateProduct = (props) => {
                 onClick={onSubmit}
                 className="btn btn-outline-success mb-3"
             >
-                Create Product
+                Update Product
             </button>
         </form>
     );
