@@ -247,7 +247,7 @@ const UpdateProduct = (props) => {
     );
 
     return (
-        <Base title='Update a product here!' description='Welcome to product updation section' className='container bg-info p-4'>
+        <Base title='Update a product here!' description='Welcome to product updating section' className='container bg-info p-4'>
             <Link 
                 to="/admin/dashboard" 
                 className='btn btn-md btn-dark mb-3'
