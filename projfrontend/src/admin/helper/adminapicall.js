@@ -109,7 +109,6 @@ export const updateCategory = async ( categoryId,categoryParams ) => {
         
         const URL =  API + "category/update/" + categoryId;
         const response = await fetch (URL, requestOptions);
-        console.log(response)
         return await response.json();
     } catch (error) {
         console.log(error);
