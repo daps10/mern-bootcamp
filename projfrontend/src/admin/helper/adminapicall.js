@@ -93,6 +93,27 @@ export const deleteCategory = async ( categoryId ) => {
     }
 }
 
+// Update Category
+export const updateCategory = async ( categoryId,categoryParams ) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 
+                "authorization" : "Bearer " + token
+            },
+            body: categoryParams
+        };
+
+        const URL =  API + "category/update/" + categoryId;
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Get all products
 export const getAllProducts = async() => {
     try {
