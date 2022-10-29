@@ -50,6 +50,28 @@ export const getAllCategories = async() => {
     }
 }
 
+// Get Category
+export const getCategory = async(categoryId) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            }
+        };
+
+        const URL =  API + "category/" + categoryId;
+            
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Delete Category
 export const deleteCategory = async ( categoryId ) => {
     try {
