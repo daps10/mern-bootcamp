@@ -16,6 +16,7 @@ import ManageCategories from './admin/ManageCategories';
 import AddProduct from './admin/AddProduct';
 import ManageProducts from './admin/ManageProducts';
 import UpdateProduct from './admin/UpdateProduct';
+import UpdateCategory from './admin/UpdateCategory';
 
 
 const Routes = () => {
@@ -48,6 +49,12 @@ const Routes = () => {
                 <Route path="/admin/categories" element={
                     <AdminRoute>
                         <ManageCategories/>      
+                    </AdminRoute>
+                }/>
+
+                <Route path="/admin/category/:categoryId" element={
+                    <AdminRoute>
+                        <UpdateCategory/>  
                     </AdminRoute>
                 }/>
 

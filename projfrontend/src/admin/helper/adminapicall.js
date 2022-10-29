@@ -50,6 +50,71 @@ export const getAllCategories = async() => {
     }
 }
 
+// Get Category
+export const getCategory = async(categoryId) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            }
+        };
+
+        const URL =  API + "category/" + categoryId;
+            
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Delete Category
+export const deleteCategory = async ( categoryId ) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            }
+        };
+        
+        const URL =  API + "category/" + categoryId;
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Update Category
+export const updateCategory = async ( categoryId,categoryParams ) => {
+    try {
+        const token = isAuthenticated();
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                "authorization" : "Bearer " + token
+            },
+            body: JSON.stringify( categoryParams )
+        };
+        
+        const URL =  API + "category/update/" + categoryId;
+        const response = await fetch (URL, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Get all products
 export const getAllProducts = async() => {
     try {
