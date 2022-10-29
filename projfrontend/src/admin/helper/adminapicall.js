@@ -101,13 +101,15 @@ export const updateCategory = async ( categoryId,categoryParams ) => {
         const requestOptions = {
             method: 'PUT',
             headers: { 
+                'Content-Type': 'application/json',
                 "authorization" : "Bearer " + token
             },
-            body: categoryParams
+            body: JSON.stringify( categoryParams )
         };
-
+        
         const URL =  API + "category/update/" + categoryId;
         const response = await fetch (URL, requestOptions);
+        console.log(response)
         return await response.json();
     } catch (error) {
         console.log(error);
