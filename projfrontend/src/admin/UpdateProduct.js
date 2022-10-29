@@ -241,7 +241,7 @@ const UpdateProduct = (props) => {
                 onClick={onSubmit}
                 className="btn btn-outline-success mb-3"
             >
-                Update Product
+                Update a Product
             </button>
         </form>
     );
