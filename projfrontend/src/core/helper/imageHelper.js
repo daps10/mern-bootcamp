@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageHelper = () => {
+const ImageHelper = ({ product }) => {
     return (
         <div className="rounded border border-success p-2">
             <img
