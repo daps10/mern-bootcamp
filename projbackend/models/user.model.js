@@ -82,6 +82,7 @@ userSchema.methods = {
 
     // authenticate
     authenticate: function (plainpassword) {
+        console.log(this.securePassword(plainpassword))
         return this.securePassword(plainpassword) === this.encry_password;
     },
     // secure password
