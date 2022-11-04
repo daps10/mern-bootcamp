@@ -38,7 +38,6 @@ router.get(
 // Get photo
 router.get(
     '/photo/:id', 
-    checkAuthorization,
     getPhoto
 );
 

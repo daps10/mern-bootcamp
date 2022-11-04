@@ -13,11 +13,10 @@ const getPhoto = async(req, res, next) => {
         }
         if(productData.photo.data){
             res.set("Content-Type", productData.photo.contentType);
-            req.productData = req.productData.photo.data;
-            next();    
-        } else {
-            next();    
+            console.log(productData.photo.data)
+            return res.send(productData.photo.data);
         }
+        next();
     } catch (error) {
         console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
