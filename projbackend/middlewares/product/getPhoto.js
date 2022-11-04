@@ -13,7 +13,6 @@ const getPhoto = async(req, res, next) => {
         }
         if(productData.photo.data){
             res.set("Content-Type", productData.photo.contentType);
-            console.log(productData.photo.data)
             return res.send(productData.photo.data);
         }
         next();
