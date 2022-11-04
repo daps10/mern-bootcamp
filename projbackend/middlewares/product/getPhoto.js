@@ -11,7 +11,6 @@ const getPhoto = async(req, res, next) => {
                 message: t("text_product_not_found")
             });
         }
-
         if(productData.photo.data){
             res.set("Content-Type", productData.photo.contentType);
             req.productData = req.productData.photo.data;
@@ -20,6 +19,7 @@ const getPhoto = async(req, res, next) => {
             next();    
         }
     } catch (error) {
+        console.log(error)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
             status: httpStatus.INTERNAL_SERVER_ERROR,
             message: t("text_not_able_to_save_user")
