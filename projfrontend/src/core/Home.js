@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <>
         <Base title='Home Page' description='My description'>
-            <div className="row">
+            <div className="row text-center">
                 <div className="col-4">
                     <Card/>
                 </div>
