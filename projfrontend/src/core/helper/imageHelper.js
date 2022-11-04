@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Image helper which can display as cards.
 const ImageHelper = ({ product }) => {
     return (
         <div className="rounded border border-success p-2">
