@@ -52,7 +52,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // set security HTTP headers
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+
 
 // sanitize request data
 app.use(xss());
