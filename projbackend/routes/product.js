@@ -18,6 +18,7 @@ const{
     deleteProduct
 } = require("../controllers/product.controller");
 const fileUpload = require('../middlewares/product/fileUpload');
+const getPhoto = require('../middlewares/product/getPhoto');
 
 // Get all categories
 router.get(
@@ -32,6 +33,12 @@ router.get(
     checkAuthorization,
     getProductById,
     getProduct
+);
+
+// Get photo
+router.get(
+    '/photo/:id', 
+    getPhoto
 );
 
 // Get all product

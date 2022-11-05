@@ -46,7 +46,6 @@ exports.signin = async (req, res) => {
         const userDetails = await authService.findOne({
             email
         });
-        
         // check user exist or not
         if(!userDetails) {
             return res.status(httpStatus.BAD_REQUEST).json({
@@ -54,7 +53,7 @@ exports.signin = async (req, res) => {
                 message: t("text_user_not_found")
             });
         }
-
+        
         // check password matched or not
         if(!await authService.checkPasswordMatched(userDetails._id,password)) {
             return res.status(httpStatus.UNAUTHORIZED).json({
@@ -62,7 +61,7 @@ exports.signin = async (req, res) => {
                 message: t("text_user_login_fail")
             });
         }
-
+        
         // Create token 
         const accessToken = await authService.generateAccessToken(userDetails._id);
 
