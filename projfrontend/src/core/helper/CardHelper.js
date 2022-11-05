@@ -24,4 +24,27 @@ export const loadCart = () => {
             return JSON.parse(localStorage.getItem("cart"));
         }
     }
-};
+}
+
+// remove item from cart
+export const removeItemFromCart = (productId) => {
+    let cart = [];
+
+    if (typeof window !== undefined) {
+        if (localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"));
+        }
+
+        // remove from cart
+        cart.map((product, i) => {
+            if(product._id === productId) {
+                cart.splice(i, 1);
+            }
+            return cart
+        })
+
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+
+    return cart;   
+}
