@@ -8,10 +8,26 @@ import { getAllProducts } from './helper/coreapicalls';
 const Cart = () => {
     const [products, setProducts] = useState([])
 
+    useEffect(() => {
+        setProducts(loadCart());
+        // eslint-disable-next-line
+    }, [])
+    
+
     const loadAllProducts = () => {
         return (
             <div>
                 <h2>This section is to load products</h2>
+                { 
+                    products.map((product, index) => (
+                        <Card
+                            key={index}
+                            product={ product }
+                            removeFromCart={true}
+                            addToCart={false}
+                        />
+                    ))
+                }
             </div>
         )
     }
@@ -27,7 +43,7 @@ const Cart = () => {
     return (
         <>
         <Base title='Cart Page' description='Ready to checkout'>
-            <div className="row">
+            <div className="row text-center">
                 <div className="col-6">
                     {
                         loadAllProducts()

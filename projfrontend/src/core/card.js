@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { addItemToCart } from './helper/CardHelper';
 import  { useNavigate } from 'react-router-dom'
 import ImageHelper from './helper/imageHelper';
