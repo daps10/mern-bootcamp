@@ -48,3 +48,11 @@ export const removeItemFromCart = (productId) => {
 
     return cart;   
 }
+
+// empty card
+export const cartEmpty = next => {
+    if (typeof window !== undefined) {
+        localStorage.removeItem("cart");
+        next();
+    }
+}
