@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { addItemToCart } from './helper/CardHelper';
+import { addItemToCart, removeItemFromCart } from './helper/CardHelper';
 import  { useNavigate } from 'react-router-dom'
 import ImageHelper from './helper/imageHelper';
 
 const Card = ({  
   product,
   addToCart= true,
-  removeFromCart= false
+  removeFromCart= false,
+  reload= undefined,
+  setReload = f => f,
+  // function(f){ return f }
 }) => {
   let navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
@@ -45,7 +48,10 @@ const Card = ({
     return (
       removeFromCart && (
         <button
-          onClick={() => {}}
+          onClick={() => {
+            removeItemFromCart( product._id );
+            setReload(!reload);
+          }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"
           >
             Remove from cart

@@ -6,12 +6,14 @@ import { loadCart } from './helper/CardHelper';
 import { getAllProducts } from './helper/coreapicalls';
 
 const Cart = () => {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
         setProducts(loadCart());
         // eslint-disable-next-line
-    }, [])
+    }, [reload])
     
 
     const loadAllProducts = () => {
@@ -25,6 +27,8 @@ const Cart = () => {
                             product={ product }
                             removeFromCart={true}
                             addToCart={false}
+                            setReload={ setReload }
+                            reload={ reload }
                         />
                     ))
                 }
