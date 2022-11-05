@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { addItemToCart } from './helper/CardHelper';
+import  { useNavigate } from 'react-router-dom'
 import ImageHelper from './helper/imageHelper';
 
 const Card = ({  
@@ -6,17 +8,29 @@ const Card = ({
   addToCart= true,
   removeFromCart= false
 }) => {
+  let navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false);
 
   const cardTitle = product ? product.name : "A photo from pexels"; 
   const cardDescription = product ? product.description : "Default description"; 
   const cardPrice = product ? product.price : "DEFAULT"; 
+
+  const addToTheCart = () => {
+    addItemToCart( product , () => setRedirect(true) );
+  }
+
+  const getARedirect = (redirect) => {
+    if(redirect) {
+      navigate('/cart');
+    }
+  }
 
   // show add to cart
   const showAddToCart = () => {
     return (
       addToCart && (
         <button
-          onClick={() => {}}
+          onClick={ () => addToTheCart() }
           className="btn btn-block btn-outline-success mt-2 mb-2"
           >
             Add to Cart
@@ -43,6 +57,7 @@ const Card = ({
     <div className="card text-white bg-dark border border-info ">
       <div className="card-header lead">{ cardTitle }</div>
       <div className="card-body">
+        { getARedirect(redirect) }
         <ImageHelper product={ product } />
         <p className="lead bg-success font-weight-normal text-wrap">
           { cardDescription }
