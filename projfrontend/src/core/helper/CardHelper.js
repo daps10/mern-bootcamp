@@ -15,4 +15,13 @@ export const addItemToCart = ( item, next ) => {
 
         next();
     }
-}
+};
+
+// Load a cart
+export const loadCart = () => {
+    if (typeof window !== undefined) {
+        if (localStorage.getItem("cart")) {
+            return JSON.parse(localStorage.getItem("cart"));
+        }
+    }
+};
